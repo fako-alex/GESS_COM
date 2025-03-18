@@ -12,13 +12,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->id();  // ID personnel
+            $table->string('name');  // Nom personnel
+            $table->string('first_name')->nullable();  // Prénom personnel
+            $table->enum('gender', ['Feminin', 'Masculin'])->nullable();  // Sexe
+            $table->string('phone')->nullable();  // N° de téléphone
+            $table->string('email')->unique();  // Email unique
+            $table->foreignId('service_id')->constrained()->onDelete('cascade');
+            $table->timestamp('email_verified_at')->nullable();  // Date de vérification de l'email
+            $table->string('birth_place')->nullable();  // Lieu de naissance
+            $table->date('birth_date')->nullable();  // Date de naissance
+            $table->string('country')->default('Gabon');  // Pays
+            $table->string('city')->default('Libreville');  // Ville
+            $table->string('neighborhood')->nullable();  // Quartier
+            $table->date('hiring_date')->nullable();  // Date d'embauche
+            $table->date('departure_date')->nullable();  // Date de départ
+            $table->enum('role', ['Personnel', 'Admin'])->default('Personnel');  // Rôle
+            $table->enum('status', ['Actif', 'Inactif'])->default('Actif');  // Statut
+            $table->string('profile_picture')->nullable();  // Photo de profil
+            $table->foreignId('added_by')->nullable()->constrained('users');  // personnel ayant ajouté ce profil (clé étrangère)
+            $table->string('password')->nullable();  // Mot de passe
+            $table->rememberToken();  // Token de session
+            $table->timestamps();  // Date de création et mise à jour
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

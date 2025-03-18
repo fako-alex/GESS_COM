@@ -2,19 +2,19 @@
   <nav x-data="sidebar" class="sidebar fixed bottom-0 top-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300">
       <div class="h-full bg-white dark:bg-[#0e1726]">
           <div class="flex items-center justify-between px-4 py-3">
-                <a href="{{ url('/admin/dashboard')}}" class="main-logo flex shrink-0 items-center">
+                <a href="{{ url('/admin/dashboard')}}" class="flex items-center main-logo shrink-0">
                     @if (Auth::user()->profile_picture)
-                        <img class="ml-[5px] w-8 flex-none" src="{{ asset('documents/users/' . Auth::user()->profile_picture)}}" alt="image">
+                        <img class="ml-[5px] w-8 flex-none" src="{{ asset('documents/profil/users/' . Auth::user()->profile_picture)}}" alt="image">
                     @else
-                        <span><img class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100" src="{{ asset('template/assets/images/user-profile.jpeg')}}" alt="image"></span>
+                        <span><img class="object-cover rounded-full h-9 w-9 saturate-50 group-hover:saturate-100" src="{{ asset('template/assets/images/user-profile.jpeg')}}" alt="image"></span>
                     @endif
                     <span class="truncate max-w-[110px] block align-middle text-2xl font-semibold ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light lg:inline">
                         {{ Auth::user()->name }}
                     </span>
 
                 </a>
-              <a href="javascript:;" class="collapse-icon flex h-8 w-8 items-center rounded-full transition duration-300 hover:bg-gray-500/10 rtl:rotate-180 dark:text-white-light dark:hover:bg-dark-light/10" @click="$store.app.toggleSidebar()">
-                  <svg class="m-auto h-5 w-5" width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <a href="javascript:;" class="flex items-center w-8 h-8 transition duration-300 rounded-full collapse-icon hover:bg-gray-500/10 rtl:rotate-180 dark:text-white-light dark:hover:bg-dark-light/10" @click="$store.app.toggleSidebar()">
+                  <svg class="w-5 h-5 m-auto" width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                       <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   </svg>
@@ -38,7 +38,7 @@
                  <ul></ul>
               </li>
                 <li class="menu nav-item">
-                    <button type="button" class="nav-link group" :class="{'active' : activeDropdown === 'users'}" @click="activeDropdown === 'users' ? activeDropdown = null : activeDropdown = 'users'">
+                    <button type="button" class="nav-link group" :class="{'active' : activeDropdown === 'personnels'}" @click="activeDropdown === 'personnels' ? activeDropdown = null : activeDropdown = 'personnels'">
                         <div class="flex items-center">
                             <svg class="shrink-0 group-hover:!text-primary" width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle opacity="0.5" cx="15" cy="6" r="3" fill="currentColor"></circle>
@@ -46,62 +46,59 @@
                                 <circle cx="9.00098" cy="6" r="4" fill="currentColor"></circle>
                                 <ellipse cx="9.00098" cy="17.001" rx="7" ry="4" fill="currentColor"></ellipse>
                             </svg>
-                            <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Utilisateurs</span>
+                            <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Personnels</span>
                         </div>
-                        <div class="rtl:rotate-180" :class="{'!rotate-90' : activeDropdown === 'users'}">
+                        <div class="rtl:rotate-180" :class="{'!rotate-90' : activeDropdown === 'personnels'}">
                             <svg width="16" height="16" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
                     </button>
-                    <ul x-cloak="" x-show="activeDropdown === 'users'" x-collapse="" class="sub-menu text-gray-500">
-                        
+                    <ul x-cloak="" x-show="activeDropdown === 'personnels'" x-collapse="" class="text-gray-500 sub-menu">
                         <li>
-                            <a href="{{url('users/create')}}">Ajouter utilisateurs</a>
+                            <a href="{{url('users/create')}}">Ajout personnel</a>
                         </li>
                         <li>
-                            <a href="{{url('users/list')}}">Lister utilisateurs</a>
+                            <a href="{{url('users/list')}}">List personnel</a>
                         </li>
                     </ul>
                 </li>
-              {{-- end user --}}
+              {{-- end personnel --}}
 
-              {{-- start crud books --}}
-              <!-- <li class="menu nav-item">
-                  <button type="button" class="nav-link group" :class="{'active' : activeDropdown === 'books'}" @click="activeDropdown === 'books' ? activeDropdown = null : activeDropdown = 'books'">
+              {{-- start services --}}
+              <li class="menu nav-item">
+                  <button type="button" class="nav-link group" :class="{'active' : activeDropdown === 'services'}" @click="activeDropdown === 'services' ? activeDropdown = null : activeDropdown = 'services'">
                       <div class="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-fill" viewBox="0 0 16 16">
-                            <path d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
-                          </svg>
-                          <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Gestion documents</span>
+                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-fill" viewBox="0 0 16 16">
+                                <path d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+                            </svg> --}}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path opacity="0.5" d="M2.5 6.5C2.5 4.29086 4.29086 2.5 6.5 2.5C8.70914 2.5 10.5 4.29086 10.5 6.5V9.16667C10.5 9.47666 10.5 9.63165 10.4659 9.75882C10.3735 10.1039 10.1039 10.3735 9.75882 10.4659C9.63165 10.5 9.47666 10.5 9.16667 10.5H6.5C4.29086 10.5 2.5 8.70914 2.5 6.5Z" stroke="currentColor" stroke-width="1.5"></path>
+                                <path opacity="0.5" d="M13.5 14.8333C13.5 14.5233 13.5 14.3683 13.5341 14.2412C13.6265 13.8961 13.8961 13.6265 14.2412 13.5341C14.3683 13.5 14.5233 13.5 14.8333 13.5H17.5C19.7091 13.5 21.5 15.2909 21.5 17.5C21.5 19.7091 19.7091 21.5 17.5 21.5C15.2909 21.5 13.5 19.7091 13.5 17.5V14.8333Z" stroke="currentColor" stroke-width="1.5"></path>
+                                <path d="M2.5 17.5C2.5 15.2909 4.29086 13.5 6.5 13.5H8.9C9.46005 13.5 9.74008 13.5 9.95399 13.609C10.1422 13.7049 10.2951 13.8578 10.391 14.046C10.5 14.2599 10.5 14.5399 10.5 15.1V17.5C10.5 19.7091 8.70914 21.5 6.5 21.5C4.29086 21.5 2.5 19.7091 2.5 17.5Z" stroke="currentColor" stroke-width="1.5"></path>
+                                <path d="M13.5 6.5C13.5 4.29086 15.2909 2.5 17.5 2.5C19.7091 2.5 21.5 4.29086 21.5 6.5C21.5 8.70914 19.7091 10.5 17.5 10.5H14.6429C14.5102 10.5 14.4438 10.5 14.388 10.4937C13.9244 10.4415 13.5585 10.0756 13.5063 9.61196C13.5 9.55616 13.5 9.48982 13.5 9.35714V6.5Z" stroke="currentColor" stroke-width="1.5"></path>
+                            </svg>
+                            <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Services</span>
                       </div>
-                      <div class="rtl:rotate-180" :class="{'!rotate-90' : activeDropdown === 'books'}">
+                      <div class="rtl:rotate-180" :class="{'!rotate-90' : activeDropdown === 'services'}">
                           <svg width="16" height="16" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                           </svg>
                       </div>
                   </button>
-                  <ul x-cloak="" x-show="activeDropdown === 'books'" x-collapse="" class="sub-menu text-gray-500">
-                    
+                  <ul x-cloak="" x-show="activeDropdown === 'services'" x-collapse="" class="text-gray-500 sub-menu">
+
                         <li>
-                          <a href="{{url('genres/create')}}">Genres des livres</a>
+                          <a href="{{url('services/create')}}">Ajout services</a>
                         </li>
                         <li>
-                          <a href="{{url('types/create')}}">Types de livres</a>
+                            <a href="{{url('services/list')}}">List services</a>
                         </li>
-                        <li>
-                            <a href="{{url('books/create')}}">Ajouter les livres</a>
-                        </li>
-                        <li>
-                            <a href="{{url('books/list')}}">Lister les livres</a>
-                        </li>
-                        {{-- <li>
-                            <a href="{{url('books')}}">Voir les livres</a>
-                        </li> --}}
-                    
                   </ul>
-              </li> -->
-              {{-- end crud books --}}
+              </li>
+              {{-- end services --}}
+
+
 
               {{-- start borrow and return a book --}}
               <!-- <li class="menu nav-item">
@@ -118,7 +115,7 @@
                           </svg>
                       </div>
                   </button>
-                  <ul x-cloak="" x-show="activeDropdown === 'transactions'" x-collapse="" class="sub-menu text-gray-500">
+                  <ul x-cloak="" x-show="activeDropdown === 'transactions'" x-collapse="" class="text-gray-500 sub-menu">
                     <li>
                         <a href="{{url('loans/borrow')}}">Emprunter documents</a>
                     </li>
@@ -150,7 +147,7 @@
                           </svg>
                       </div>
                   </button>
-                  <ul x-cloak="" x-show="activeDropdown === 'pages'" x-collapse="" class="sub-menu text-gray-500">
+                  <ul x-cloak="" x-show="activeDropdown === 'pages'" x-collapse="" class="text-gray-500 sub-menu">
                       <li>
                           <a href="pages-knowledge-base.html">Knowledge Base</a>
                       </li>
@@ -179,7 +176,7 @@
                                   </svg>
                               </div>
                           </button>
-                          <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'error'" x-collapse="">
+                          <ul class="text-gray-500 sub-menu ltr:ml-2 rtl:mr-2" x-show="subActive === 'error'" x-collapse="">
                               <li>
                                   <a href="pages-error404.html" target="_blank">404</a>
                               </li>
@@ -216,7 +213,7 @@
                             </svg>
                         </div>
                     </button>
-                    <ul x-cloak="" x-show="activeDropdown === 'authentication'" x-collapse="" class="sub-menu text-gray-500">
+                    <ul x-cloak="" x-show="activeDropdown === 'authentication'" x-collapse="" class="text-gray-500 sub-menu">
                         <li>
                             <a href="auth-boxed-signin.html" target="_blank">Login Boxed</a>
                         </li>

@@ -3,7 +3,7 @@
 
 @section('content')
 
-<form method="post" action="{{ route('admin.users.create')}}" enctype="multipart/form-data" class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]">
+<form method="post" action="{{ route('admin.users.save') }}" enctype="multipart/form-data" class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]">
     @csrf
     <div class="panel">
         <div class="flex items-center justify-between mb-5">
@@ -62,64 +62,69 @@
     <div class="flex flex-col sm:flex-row">
         <div class="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-3">
             <div>
-                <label for="name">Nom </label>
-                <input id="name" name="name" value="{{ old('name') }}" type="text" placeholder="Exp : FAKO" class="form-input">
+                <label for="name">Nom(s)<span class="text-danger">*</span></label>
+                <input id="name" name="name" value="{{ old('name') }}" type="text" placeholder="Exp : FAKO" class="form-input" required>
                 @if($errors->has('name'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('name') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('name') }}</span>
                 @endif
             </div>
 
             <div>
-                <label for="first_name">Prénom(s) </label>
-                <input id="first_name" name="first_name" value="{{ old('first_name') }}" type="text" placeholder="Exp : Alex" class="form-input">
+                <label for="first_name">Prénom(s) <span class="text-danger">*</span></label>
+                <input id="first_name" name="first_name" value="{{ old('first_name') }}" type="text" placeholder="Exp : Alex" class="form-input" required>
                 @if($errors->has('first_name'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('first_name') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('first_name') }}</span>
                 @endif
             </div>
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
             <div>
-                <label for="gender">Sexe</label>
-                <select id="gender" name="gender" class="form-select text-white-dark">
+                <label for="gender">Sexe <span class="text-danger">*</span></label>
+                <select id="gender" name="gender" class="form-select text-white-dark" required>
                     <option value="">Sélectionner un sexe</option>
                     <option value="Feminin">Féminin</option>
                     <option value="Masculin">Masculin</option>
                 </select>
                 @if($errors->has('gender'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('gender') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('gender') }}</span>
                 @endif
             </div>
 
             <div>
-                <label for="phone">N° de téléphone</label>
+                <label for="phone">N° de téléphone <span class="text-danger">*</span></label>
                 <input type="tel" id="phone" name="phone" class="form-input" placeholder="(241) 77-22-71-07" maxlength="18" oninput="formatPhoneNumber(this)" required>
                 @if($errors->has('phone'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('phone') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('phone') }}</span>
                 @endif
             </div>
 
             <div>
-                <label for="email">Email</label>
+                <label for="email">Email <span class="text-danger">*</span></label>
                 <input type="email" id="email" name="email" class="form-input" placeholder="Entrez votre email" required>
                 @if($errors->has('email'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('email') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('email') }}</span>
                 @endif
             </div>
 
+            <div>
+                <label for="service">Service <span class="text-danger">*</span></label>
+                <select id="service" name="service" class="form-input" required>
+                    <option value="">Sélectionner un service</option>
+                    @foreach($services as $service)
+                        <option value="{{ $service->id }}" {{ old('service') == $service->id ? 'selected' : '' }}>
+                            {{ $service->name }} <!-- ou un autre champ que tu veux afficher -->
+                        </option>
+                    @endforeach
+                </select>
+                @if($errors->has('service'))
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('service') }}</span>
+                @endif
+            </div>
 
             <div>
-                <label for="birth_date">Date de naissance</label>
-                <input id="birth_date" value="{{ old('birth_date') }}" name="birth_date" type="date" class="form-input">
+                <label for="birth_date">Date de naissance <span class="text-danger">*</span></label>
+                <input id="birth_date" value="{{ old('birth_date') }}" name="birth_date" type="date" class="form-input" required>
                 @if($errors->has('birth_date'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('birth_date') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('birth_date') }}</span>
                 @endif
             </div>
 
@@ -127,7 +132,7 @@
                 <label for="birth_place">Lieu de naissance</label>
                 <input id="birth_place" value="{{ old('birth_place') }}" name="birth_place" type="text" placeholder="Lieu de naissance" class="form-input">
                 @if($errors->has('birth_place'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('birth_place') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('birth_place') }}</span>
                 @endif
             </div>
 
@@ -135,46 +140,59 @@
                 <label for="country">Pays</label>
                 <input id="country" value="{{ old('country') }}" name="country" type="text" placeholder="Lieu de naissance" class="form-input">
                 @if($errors->has('country'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('country') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('country') }}</span>
                 @endif
             </div>
 
             <div>
-                <label for="City">Ville</label>
-                <input id="City" value="{{ old('City') }}" name="City" type="text" placeholder="Lieu de naissance" class="form-input">
-                @if($errors->has('City'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('City') }}</span>
+                <label for="city">Ville</label>
+                <input id="city" value="{{ old('city') }}" name="city" type="text" placeholder="Lieu de naissance" class="form-input">
+                @if($errors->has('city'))
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('city') }}</span>
                 @endif
             </div>
 
             <div>
-                <label for="neighborhood">Quartier</label>
-                <input id="neighborhood" value="{{ old('neighborhood') }}" name="neighborhood" type="text" placeholder="Lieu de naissance" class="form-input">
+                <label for="neighborhood">Quartier <span class="text-danger">*</span></label>
+                <input id="neighborhood" value="{{ old('neighborhood') }}" name="neighborhood" type="text" placeholder="Lieu de naissance" class="form-input" required>
                 @if($errors->has('neighborhood'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('neighborhood') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('neighborhood') }}</span>
                 @endif
             </div>
 
             <div>
                 <label for="hiring_date">Date d'emboche</label>
-                <input id="hiring_date" value="{{ old('hiring_date') }}" name="hiring_date" type="text" placeholder="Lieu de naissance" class="form-input">
+                <input id="hiring_date" value="{{ old('hiring_date') }}" name="hiring_date" type="date" placeholder="Lieu de naissance" class="form-input">
                 @if($errors->has('hiring_date'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('hiring_date') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('hiring_date') }}</span>
                 @endif
             </div>
 
             <div>
                 <label for="departure_date">Date de départ</label>
-                <input id="departure_date" value="{{ old('departure_date') }}" name="departure_date" type="text" placeholder="Lieu de naissance" class="form-input">
+                <input id="departure_date" value="{{ old('departure_date') }}" name="departure_date" type="date" placeholder="Lieu de naissance" class="form-input">
                 @if($errors->has('departure_date'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('departure_date') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('departure_date') }}</span>
                 @endif
             </div>
 
             <div>
+                <label for="role">Rôle <span class="text-danger">*</span></label>
+                <select id="role" name="role" class="form-select" onchange="toggleFields()" required>
+                    <option value="">Sélectionner un rôle</option>
+                    <option value="Personnel" {{ old('role') == 'Personnel' ? 'selected' : '' }}>Personnel</option>
+                    <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Administrateur</option>
+                </select>
+                @if($errors->has('role'))
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('role') }}</span>
+                @endif
+            </div>
+
+            <!-- Champ du mot de passe masqué par défaut -->
+            <div id="password-field" style="display: none;">
                 <label for="password">Mot de passe</label>
                 <div class="relative">
-                    <input id="password" value="{{ old('password') }}" name="password" type="password" class="form-input" required>
+                    <input id="password" value="{{ old('password') }}" name="password" type="password" class="form-input">
                     <button type="button" class="absolute transform -translate-y-1/2 right-2 top-1/2" onclick="togglePasswordVisibility()">
                         <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12c0 3.866-3.134 7-7 7s-7-3.134-7-7 3.134-7 7-7 7 3.134 7 7z"></path>
@@ -183,31 +201,20 @@
                     </button>
                 </div>
                 @if($errors->has('password'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('password') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('password') }}</span>
                 @endif
             </div>
 
-            <div>
-                <label for="role">Rôle</label>
-                <select id="role" name="role" class="form-select" onchange="toggleFields()">
-                    <option value="">Sélectionner un rôle</option>
-                    <option value="Personnel" {{ old('role') == 'Personnel' ? 'selected' : '' }}>Personnel</option>
-                    <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Administrateur</option>
-                </select>
-                @if($errors->has('role'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('role') }}</span>
-                @endif
-            </div>
 
             <div>
-                <label for="status">Statut du compte</label>
-                <select id="status" name="status" class="form-select text-white-dark">
+                <label for="status">Statut du compte <span class="text-danger">*</span></label>
+                <select id="status" name="status" class="form-select text-white-dark" required>
                     <option value="">Sélectionner un statut</option>
                     <option value="Actif">Actif</option>
                     <option value="Inactif">Inactif</option>
                 </select>
                 @if($errors->has('status'))
-                    <span class="text-red-500 badge-outline-danger">{{ $errors->first('status') }}</span>
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('status') }}</span>
                 @endif
             </div>
 
@@ -307,6 +314,24 @@
 
     // Appeler la fonction pour initialiser l'état des champs selon le rôle sélectionné
     toggleFields();
+</script>
+
+<script>
+    function toggleFields() {
+        var role = document.getElementById("role").value;
+        var passwordField = document.getElementById("password-field");
+
+        if (role === "Admin") {
+            passwordField.style.display = "block";
+        } else {
+            passwordField.style.display = "none";
+        }
+    }
+
+    // Exécuter au chargement pour gérer la valeur de old('role')
+    document.addEventListener("DOMContentLoaded", function() {
+        toggleFields();
+    });
 </script>
 
 @endsection

@@ -73,3 +73,10 @@ AWS_BUCKET=
 AWS_USE_PATH_STYLE_ENDPOINT=false
 
 VITE_APP_NAME="${APP_NAME}" 
+
+<!-- faire 
+php artisan db:seed //pour creer le Personnel admin par défaut : adminalex@gmail.com, Cisco1234@ pour ce connecter
+php artisan db:seed --class=DefaultUserSeeder
+php artisan migrate:refresh --seed // pour effectuer les migrations
+
+ -->

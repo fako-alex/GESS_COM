@@ -11,47 +11,25 @@
                 <ol class="flex font-semibold text-primary dark:text-white-dark">
                     <li class="bg-[#ebedf2] ltr:rounded-l-md rtl:rounded-r-md dark:bg-[#1b2e4b]">
                         <a href="javascript:;"
-                            class="relative flex h-full items-center p-1.5 before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] hover:text-primary/70 ltr:pl-3 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-3 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180 dark:before:border-l-[#1b2e4b] dark:hover:text-white-dark/70">Personnels</a>
+                            class="relative flex h-full items-center p-1.5 before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] hover:text-primary/70 ltr:pl-3 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-3 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180 dark:before:border-l-[#1b2e4b] dark:hover:text-white-dark/70">Services</a>
                     </li>
                     <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]">
                         <a
-                            class="relative flex h-full items-center bg-primary p-1.5 text-white-light before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary ltr:pl-6 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-6 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180">Liste du personnel</a>
+                            class="relative flex h-full items-center bg-primary p-1.5 text-white-light before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary ltr:pl-6 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-6 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180">Liste des services</a>
                     </li>
                 </ol>
             </div>
             <div class="flex flex-col w-full gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
                 <div class="flex gap-3">
                     <div>
-                        <a href="{{route('admin.users.create')}}" class="btn btn-primary">
+                        <a href="{{route('admin.services.create')}}" class="btn btn-primary">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ltr:mr-2 rtl:ml-2">
                                 <circle cx="10" cy="6" r="4" stroke="currentColor" stroke-width="1.5"></circle>
                                 <path opacity="0.5" d="M18 17.5C18 19.9853 18 22 10 22C2 22 2 19.9853 2 17.5C2 15.0147 5.58172 13 10 13C14.4183 13 18 15.0147 18 17.5Z" stroke="currentColor" stroke-width="1.5"></path>
                                 <path d="M21 10H19M19 10H17M19 10L19 8M19 10L19 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                             </svg>
-                            Add Contact
+                            Ajouter un service
                         </a>
-                    </div>
-                    <div>
-                        <button type="button" class="p-2 text-white btn btn-outline-primary bg-primary" :class="{ 'bg-primary text-white': displayType === 'list' }" @click="setDisplayType('list')">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
-                                <path d="M2 5.5L3.21429 7L7.5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path opacity="0.5" d="M2 12.5L3.21429 14L7.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M2 19.5L3.21429 21L7.5 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M22 19L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                <path opacity="0.5" d="M22 12L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                <path d="M22 5L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div>
-                        <button type="button" class="p-2 btn btn-outline-primary" :class="{ 'bg-primary text-white': displayType === 'grid' }" @click="setDisplayType('grid')">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
-                                <path opacity="0.5" d="M2.5 6.5C2.5 4.61438 2.5 3.67157 3.08579 3.08579C3.67157 2.5 4.61438 2.5 6.5 2.5C8.38562 2.5 9.32843 2.5 9.91421 3.08579C10.5 3.67157 10.5 4.61438 10.5 6.5C10.5 8.38562 10.5 9.32843 9.91421 9.91421C9.32843 10.5 8.38562 10.5 6.5 10.5C4.61438 10.5 3.67157 10.5 3.08579 9.91421C2.5 9.32843 2.5 8.38562 2.5 6.5Z" stroke="currentColor" stroke-width="1.5"></path>
-                                <path opacity="0.5" d="M13.5 17.5C13.5 15.6144 13.5 14.6716 14.0858 14.0858C14.6716 13.5 15.6144 13.5 17.5 13.5C19.3856 13.5 20.3284 13.5 20.9142 14.0858C21.5 14.6716 21.5 15.6144 21.5 17.5C21.5 19.3856 21.5 20.3284 20.9142 20.9142C20.3284 21.5 19.3856 21.5 17.5 21.5C15.6144 21.5 14.6716 21.5 14.0858 20.9142C13.5 20.3284 13.5 19.3856 13.5 17.5Z" stroke="currentColor" stroke-width="1.5"></path>
-                                <path d="M2.5 17.5C2.5 15.6144 2.5 14.6716 3.08579 14.0858C3.67157 13.5 4.61438 13.5 6.5 13.5C8.38562 13.5 9.32843 13.5 9.91421 14.0858C10.5 14.6716 10.5 15.6144 10.5 17.5C10.5 19.3856 10.5 20.3284 9.91421 20.9142C9.32843 21.5 8.38562 21.5 6.5 21.5C4.61438 21.5 3.67157 21.5 3.08579 20.9142C2.5 20.3284 2.5 19.3856 2.5 17.5Z" stroke="currentColor" stroke-width="1.5"></path>
-                                <path d="M13.5 6.5C13.5 4.61438 13.5 3.67157 14.0858 3.08579C14.6716 2.5 15.6144 2.5 17.5 2.5C19.3856 2.5 20.3284 2.5 20.9142 3.08579C21.5 3.67157 21.5 4.61438 21.5 6.5C21.5 8.38562 21.5 9.32843 20.9142 9.91421C20.3284 10.5 19.3856 10.5 17.5 10.5C15.6144 10.5 14.6716 10.5 14.0858 9.91421C13.5 9.32843 13.5 8.38562 13.5 6.5Z" stroke="currentColor" stroke-width="1.5"></path>
-                            </svg>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -95,65 +73,27 @@
                         <thead>
                             <tr>
                                 <th>N°</th>
-                                <th>profil</th>
-                                <th>Nom et Prénom</th>
-                                <th>Sexe</th>
-                                <th>N° de téléphone</th>
-                                <th>Adresse email</th>
-                                <th>Service</th>
-                                <th>Date de naissance</th>
-                                <th>Lieu de naissance</th>
-                                <th>Pays</th>
-                                <th>Ville</th>
-                                <th>Quartier</th>
-                                <th>Date d'emboche</th>
-                                <th>Date de départ</th>
-                                <th>Rôle</th>
-                                <th>Statut compte</th>
-                                <th>Créer par</th>
+                                <th>Nom du service</th>
                                 <th>Date de creation</th>
+                                <th>Créer par</th>
+                                <th>Description du service</th>
                                 <th class="!text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($users as $user)
+                            @forelse($services as $service)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>
-                                        <div class="flex items-center w-max">
-                                            <div class="flex-none mr-3">
-                                                <div class="p-1 rounded-full bg-white-dark/30">
-                                                    @if ($user->profile_picture)
-                                                        <img src="{{ asset('documents/profil/users/' . $user->profile_picture)}}" alt="photo de profile" class="object-cover w-12 h-12 rounded-full">
-                                                    @else
-                                                        Pas d'images
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>{{ $user->name ?? 'Non défini'}} {{ $user->first_name }}</td>
-                                    <td>{{ $user->gender ?? 'Non défini'}}</td>
-                                    <td>{{ $user->phone ?? 'Non défini' }}</td>
-                                    <td>{{ $user->email ?? 'Non défini' }}</td>
-                                    <td>{{ $user->service->name ?? 'Non défini' }}</td>
-                                    <td>{{ $user->birth_date ? \Carbon\Carbon::parse($user->birth_date)->format('d/m/Y') : 'Non défini' }}</td>
-                                    <td>{{ $user->birth_place ?? 'Non défini' }}</td>
-                                    <td>{{ $user->country ?? 'Non défini' }}</td>
-                                    <td>{{ $user->city ?? 'Non défini' }}</td>
-                                    <td>{{ $user->neighborhood ?? 'Non défini' }}</td>
-                                    <td>{{ $user->hiring_date ? \Carbon\Carbon::parse($user->hiring_date)->format('d/m/Y') : 'Non défini' }}</td>
-                                    <td>{{ $user->departure_date ? \Carbon\Carbon::parse($user->departure_date)->format('d/m/Y') : 'Non défini' }}</td>
-                                    <td>{{ $user->role ?? 'Non défini' }}</td>
-                                    <td>{{ $user->status ?? 'Non défini' }}</td>
-                                    <td>{{ $user->addedByUser ? $user->addedByUser->name . ' ' . $user->addedByUser->first_name : 'Non défini' }}</td>
-                                    <td>{{ $user->created_at ? \Carbon\Carbon::parse($user->created_at)->format('d/m/Y') : 'Non défini' }}</td>
+                                    <td>{{ $service->name }}</td>
+                                    <td>{{ $service->created_at ? \Carbon\Carbon::parse($service->created_at)->format('d/m/Y') : ' ' }}</td>
+                                    <td>{{ $service->addedByservice ? $service->addedByservice->name . ' ' . $service->addedByservice->first_name : 'Non défini' }}</td>
+                                    <td>{{ $service->detail ?? 'Non défini'}}</td>
                                     <td class="text-center">
                                         <ul class="flex items-center justify-center gap-2">
                                             <div x-data="{ open: false, selectedType: '' }">
                                                 <!-- Bouton Modifier avec modale -->
                                                 <li>
-                                                    <a href="{{ route('admin.users.update',['id'=> $user->id]) }}"x-tooltip="Modifier">
+                                                    <a href="{{ route('admin.services.update',['id'=> $service->id]) }}"x-tooltip="Modifier">
                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 text-success">
                                                             <path
@@ -168,7 +108,7 @@
                                             </div>
                                             <div>
                                                 <li>
-                                                    <a onclick="confirmation(event)" href="{{ route('admin.users.delete', $user->id) }}"  x-tooltip="Supprimer">
+                                                    <a onclick="confirmation(event)" href="{{ route('admin.services.delete', $service->id) }}"  x-tooltip="Supprimer">
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-danger">
                                                             <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5"
@@ -192,7 +132,7 @@
                                 </tr>
                             @empty
                                 <tr class="text-center">
-                                    <td colspan="3">Pas de personnels</td>
+                                    <td colspan="3">Pas de services</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -200,80 +140,6 @@
                 </div>
             </template>
         </div>
-        {{-- deuxième type d'affichage --}}
-        <template x-if="displayType === 'grid'">
-            <div class="grid w-full grid-cols-1 gap-6 my-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                @forelse($users as $user)
-                    <div class="relative overflow-hidden rounded-md bg-white text-center shadow dark:bg-[#1c232f]">
-                        <div class="rounded-t-md bg-white/40 bg-[url('../images/notification-bg.png')] bg-cover bg-center p-6 pb-0">
-                            <template>
-                                <img class="object-contain w-4/5 mx-auto max-h-40" src="assets/images/user-profile.jpeg">
-                            </template>
-                        </div>
-                        <div class="relative px-6 pb-24 -mt-10">
-                            <div class="px-2 py-4 bg-white rounded-md shadow-md dark:bg-gray-900">
-                                <div class="flex flex-wrap items-center gap-3 mt-2">
-                                    <div class="flex-auto">
-                                        {{-- <img class="object-cover w-20 h-20 rounded-full" src="{{asset('template/assets/images/user-profile.jpeg')}}"> --}}
-                                    </div>
-                                    <div class="flex-center">
-                                        @if ($user->profile_picture)
-                                            <img src="{{ asset('documents/profil/users/' . $user->profile_picture)}}" alt="photo de profile" class="object-cover w-20 h-20">
-                                        @else
-                                            Pas d'images
-                                        @endif
-                                    </div>
-                                    <div class="flex-auto">
-                                        {{-- <img class="object-cover w-20 h-20 rounded-full" src="{{asset('template/assets/images/user-profile.jpeg')}}"> --}}
-                                    </div>
-                                </div>
-                                <div class="text-xl">{{ $user->name ?? 'Non défini'}} {{ $user->first_name }}</div>
-                            </div>
-                            <div class="grid grid-cols-1 gap-4 mt-3 ltr:text-left rtl:text-right">
-                                <div class="flex items-center">
-                                    <div class="flex-none ltr:mr-2 rtl:ml-2">Adresse Email :</div>
-                                    <div class="truncate text-white-dark" >{{ $user->email ?? 'Non défini' }}</div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="flex-none ltr:mr-2 rtl:ml-2">N° de Téléphone :</div>
-                                    <div class="text-white-dark" >{{ $user->phone ?? 'Non défini' }}</div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="flex-none ltr:mr-2 rtl:ml-2">Adresse de Résidence :</div>
-                                    <div class="text-white-dark" >{{ $user->address ?? 'Non défini' }}</div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="flex-none ltr:mr-2 rtl:ml-2">Créer Par :</div>
-                                    <div class="text-white-dark" >{{ $user->addedByUser->name ?? 'Non défini' }}</div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="flex-none ltr:mr-2 rtl:ml-2">Date de Création :</div>
-                                    <div class="text-white-dark" >{{ $user->registration_date ?? 'Non défini' }}</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="absolute bottom-0 flex w-full gap-4 p-6 mt-2 ltr:left-0 rtl:right-0">
-                            <a href="{{ route('admin.users.update',['id'=> $user->id]) }}" class="w-1/2 btn btn-outline-primary">Modifier</a>
-                            {{-- <button  type="button" class="w-1/2 btn btn-outline-primary">Edit</button> --}}
-                            {{-- <a onclick="confirmation(event)" href="{{ route('admin.users.delete', $user->id) }}" class="w-1/2 btn btn-outline-danger">
-                                Supprimer
-                            </a> --}}
-                            <a onclick="confirmation(event)" href="{{ route('admin.users.delete', $user->id) }}" class="w-1/2 btn btn-outline-danger">
-                                Supprimer
-                            </a>
-
-
-                            {{-- <button type="button" class="w-1/2 btn btn-outline-danger">Delete</button> --}}
-                        </div>
-                    </div>
-                @empty
-                    <diiv class="text-center">
-                        <h1 colspan="3">Pas de personnels</h1>
-                    </diiv>
-                @endforelse
-            </div>
-        </template>
     </div>
     <!-- end main content section -->
 
@@ -318,43 +184,6 @@
 </script>
 
 <script>
-    // function confirmation(ev) {
-    //     ev.preventDefault();
-    //     var urlToRedirect = ev.currentTarget.getAttribute('href');
-    //     console.log(urlToRedirect);
-
-    //     Swal.fire({
-    //         title: "Êtes-vous sûr ?",
-    //         text: "Cette action est irréversible !",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#d33",
-    //         cancelButtonColor: "#3085d6",
-    //         confirmButtonText: "Oui, supprimer !",
-    //         cancelButtonText: "Annuler"
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             // Envoie de la requête DELETE avec CSRF token
-    //             fetch(urlToRedirect, {
-    //                 method: 'DELETE',
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Récupérer le token CSRF
-    //                 }
-    //             })
-    //             .then(response => {
-    //                 if (response.ok) {
-    //                     Swal.fire('Supprimé !', 'Le personnel a été supprimé.', 'success');
-    //                     window.location.reload();  // Recharger la page après la suppression
-    //                 } else {
-    //                     Swal.fire('Erreur', 'Il y a eu un problème lors de la suppression.', 'error');
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 Swal.fire('Erreur', 'Il y a eu un problème avec la demande.', 'error');
-    //             });
-    //         }
-    //     });
-    // }
     function confirmation(ev) {
        ev.preventDefault();
        var urlToRedirect = ev.currentTarget.getAttribute('href');
