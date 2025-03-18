@@ -3,10 +3,8 @@
       <div class="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-[#0e1726]">
           <div class="flex items-center justify-between horizontal-logo ltr:mr-2 rtl:ml-2 lg:hidden">
               <a href="javascriptvoid:;" class="flex items-center main-logo shrink-0">
-                  <img class="inline w-8 ltr:-ml-1 rtl:-mr-1" src="{{ asset('template/assets/images/logo.png')}}" alt="image">
+                  {{-- <img class="inline w-8 ltr:-ml-1 rtl:-mr-1" src="{{ asset('template/assets/images/logo.png')}}" alt="image"> --}}
                   <span class="hidden align-middle text-2xl font-semibold transition-all duration-300 ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light md:inline">{{ config('app.name') }}</span>
-                  {{-- <img class="inline w-8 ltr:-ml-1 rtl:-mr-1" src="{{ asset('documents/users/' . Auth::user()->profile_picture)}}" alt="image"> --}}
-                  {{-- <span class="hidden align-middle text-2xl font-semibold transition-all duration-300 ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light md:inline">{{ Auth::user()->name }}</span> --}}
               </a>
 
               <a href="javascript:;" class="collapse-icon flex flex-none rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary ltr:ml-2 rtl:mr-2 dark:bg-dark/40 dark:text-[#d0d2d6] dark:hover:bg-dark/60 dark:hover:text-primary lg:hidden" @click="$store.app.toggleSidebar()">
@@ -52,7 +50,7 @@
                   </a>
               </div>
 
-              <div class="dropdown" x-data="dropdown" @click.outside="open = false">
+              {{-- <div class="dropdown" x-data="dropdown" @click.outside="open = false">
                   <a href="javascript:;" class="block p-2 rounded-full bg-white-light/40 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60" @click="toggle">
                       <svg width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M22 10C22.0185 10.7271 22 11.0542 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
@@ -110,14 +108,14 @@
                           </li>
                       </template>
                   </ul>
-              </div>
+              </div> --}}
               <div class="dropdown" x-data="dropdown" @click.outside="open = false">
 
               </div>
               <div class="flex-shrink-0 dropdown" x-data="dropdown" @click.outside="open = false">
                   <a href="javascript:;" class="relative group" @click="toggle()">
                     @if (Auth::user()->profile_picture)
-                      <span><img class="object-cover rounded-full h-9 w-9 saturate-50 group-hover:saturate-100" src="{{ asset('documents/users/' . Auth::user()->profile_picture)}}" alt="image"></span>
+                      <span><img class="object-cover rounded-full h-9 w-9 saturate-50 group-hover:saturate-100" src="{{ asset('documents/profil/users/' . Auth::user()->profile_picture)}}" alt="image"></span>
                     @else
                         <span><img class="object-cover rounded-full h-9 w-9 saturate-50 group-hover:saturate-100" src="{{ asset('template/assets/images/user-profile.jpeg')}}" alt="image"></span>
                     @endif
@@ -134,7 +132,7 @@
                           </div>
                       </li>
                       <li>
-                          <a href="{{url('users/profil')}}" class="dark:hover:text-white" @click="toggle">
+                          <a href="{{ route('admin.users.profil') }}" class="dark:hover:text-white" @click="toggle">
                               <svg class="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" width="18" height="18" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <circle cx="12" cy="6" r="4" stroke="currentColor" stroke-width="1.5"></circle>
                                   <path opacity="0.5" d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" stroke="currentColor" stroke-width="1.5"></path>
@@ -142,14 +140,14 @@
                               Profile
                             </a>
                       </li>
-                      <li>
+                      {{-- <li>
                           <a href="javascriptvoid:;" class="dark:hover:text-white" @click="toggle">
                               <svg class="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" width="18" height="18" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path opacity="0.5" d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12Z" stroke="currentColor" stroke-width="1.5"></path>
                                   <path d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908L18 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                               </svg>
                               Messages</a>
-                      </li>
+                      </li> --}}
                       <li class="border-t border-white-light dark:border-white-light/10">
                         <form method="POST" action="{{ route('logout') }}" class="p-0 m-0">
                             @csrf
@@ -166,74 +164,5 @@
               </div>
           </div>
       </div>
-
-      <!-- horizontal menu -->
-      {{-- <ul class="horizontal-menu hidden border-t border-[#ebedf2] bg-white px-6 py-1.5 font-semibold text-black rtl:space-x-reverse dark:border-[#191e3a] dark:bg-[#0e1726] dark:text-white-dark lg:space-x-1.5 xl:space-x-8">
-          <li class="relative menu nav-item">
-
-          </li>
-          <li class="relative menu nav-item">
-
-              <ul class="sub-menu">
-
-              </ul>
-          </li>
-          <li class="relative menu nav-item">
-
-          </li>
-          <li class="relative menu nav-item">
-
-          </li>
-          <li class="relative menu nav-item">
-
-              <ul class="sub-menu">
-                  <li>
-                      <a href="tables.html">Tables</a>
-                  </li>
-                  <li class="relative">
-
-                  </li>
-              </ul>
-          </li>
-          <li class="relative menu nav-item">
-
-          </li>
-          <li class="relative menu nav-item">
-
-          </li>
-          <li class="relative menu nav-item">
-              <a href="javascript:;" class="nav-link">
-                  <div class="flex items-center">
-                      <svg width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0">
-                          <path opacity="0.5" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" fill="currentColor"></path>
-                          <path d="M12.75 9C12.75 8.58579 12.4142 8.25 12 8.25C11.5858 8.25 11.25 8.58579 11.25 9L11.25 11.25H9C8.58579 11.25 8.25 11.5858 8.25 12C8.25 12.4142 8.58579 12.75 9 12.75H11.25V15C11.25 15.4142 11.5858 15.75 12 15.75C12.4142 15.75 12.75 15.4142 12.75 15L12.75 12.75H15C15.4142 12.75 15.75 12.4142 15.75 12C15.75 11.5858 15.4142 11.25 15 11.25H12.75V9Z" fill="currentColor"></path>
-                      </svg>
-                      <span class="px-1">More</span>
-                  </div>
-                  <div class="right_arrow">
-                      <svg class="w-4 h-4 rotate-90" width="16" height="16" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </svg>
-                  </div>
-              </a>
-              <ul class="sub-menu">
-                  <li>
-                      <a href="dragndrop.html">Drag and Drop</a>
-                  </li>
-                  <li>
-                      <a href="charts.html">Charts</a>
-                  </li>
-                  <li>
-                      <a href="font-icons.html">Font Icons</a>
-                  </li>
-                  <li>
-                      <a href="widgets.html">Widgets</a>
-                  </li>
-                  <li>
-                      <a href="souysoeng.com" target="_blank">Documentation</a>
-                  </li>
-              </ul>
-          </li>
-      </ul> --}}
   </div>
 </header>

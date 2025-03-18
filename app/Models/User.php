@@ -19,9 +19,35 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'first_name',
+        'gender',
+        'phone',
         'email',
+        'service_id',
+        'birth_date',
+        'birth_place',
+        'country',
+        'city',
+        'neighborhood',
+        'hiring_date',
+        'departure_date',
+        'role',
+        'status',
+        'profile_picture',
+        'added_by',
         'password',
     ];
+
+    // Recuperer le nom de la personne
+    public function addedByUser()
+    {
+        return $this->belongsTo(User::class, 'added_by');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
