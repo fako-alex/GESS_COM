@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Service extends Model
+class ReasonForDeparture extends Model
 {
+
     use HasFactory;
-    protected $table = 'services';
+    protected $table = 'reason_for_departures';
 
     protected $fillable = ['name', 'detail', 'added_by'];
-    public function addedByservice()
+    public function addedBydeparture()
     {
         return $this->belongsTo(User::class, 'added_by');
     }
@@ -21,4 +22,5 @@ class Service extends Model
     {
         return $this->hasMany(User::class);
     }
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ReasonForDeparture;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,8 +15,10 @@ use Illuminate\Support\Facades\File;
 class UserController extends Controller
 {
     public function create(){
+        // $user = null;
         $services = Service::all();
-        return view('admin.users.create', compact('services'));
+        $departures = ReasonForDeparture::all();
+        return view('admin.users.create', compact('services','departures'));
     }
 
     public function save(Request $request) {
@@ -24,7 +27,7 @@ class UserController extends Controller
         } else {
             $userId = null;
         }
-        //  dd($request->all());
+        // dd($request->all());
         // Affichage des données de la requête avant validation pour le débogage
         // Validation des données
         $validatedData = $request->validate([
@@ -33,7 +36,9 @@ class UserController extends Controller
             'gender' => 'nullable|in:Feminin,Masculin', //sexe
             'phone' => 'nullable|max:20', //N° de téléphone
             'email' => 'required|email|unique:users,email', //Adresse email
-            'service' => 'required|exists:services,id', //Service
+            'service_id' => 'required|exists:services,id', //Service
+            'departure_id' => 'nullable|exists:reason_for_departures,id', //Motif de départ
+            'matricule' => 'required|regex:/^[A-Z0-9]+$/|max:20', //Matricule
             'birth_date' => 'nullable|date', //Date de naissance
             'birth_place' => 'nullable|max:100', //Lieu de naissance
             'country' => 'required|max:100', //Pays
@@ -51,7 +56,9 @@ class UserController extends Controller
             'email.unique' => 'Cette adresse email est déjà utilisée.',
             'phone.regex' => 'Le numéro de téléphone doit être au format +(241) 77-22-71-07.',
             'role.required' => 'Le rôle est obligatoire.',
-            'service.required' => 'Le service est obligatoire.',
+            'service_id.required' => 'Le service est obligatoire.',
+            'matricule.required' => 'Le matricule est obligatoire.',
+            'matricule.regex' => 'Le matricule doit être au format QQAAABBVVCC12345ZDZ456',
             'role.in' => 'Le rôle sélectionné est invalide.',
         ]);
         // dd($validatedData);
@@ -91,6 +98,7 @@ class UserController extends Controller
     public function list(){
 
         $users = User::latest('id')->get();
+        // $users = User::with('departures')->latest('id')->get();
         return view('admin.users.list', compact('users'));
     }
 
@@ -113,8 +121,9 @@ class UserController extends Controller
         // dd($request->all());
         $user = User::findOrFail($id);
         $services = Service::all();
+        $departures = ReasonForDeparture::all();
 
-        return view('admin.users.update',compact('user', 'services'));
+        return view('admin.users.update',compact('user', 'services', 'departures'));
     }
 
     public function update_users(Request $request, $id)
@@ -131,6 +140,8 @@ class UserController extends Controller
                 // 'email' => 'required|email|unique:users,email',
                 'email' => 'required|email|unique:users,email,' . $id,
                 'service' => 'required|exists:services,id', //Service
+                'departure_id' => 'nullable|exists:services,id', //Depart
+                'matricule' => 'required|regex:/^[A-Z0-9]+$/|max:20',
                 'birth_date' => 'nullable|date',
                 'birth_place' => 'nullable|max:100',
                 'country' => 'required|max:100',
@@ -149,6 +160,8 @@ class UserController extends Controller
                 'phone.regex' => 'Le numéro de téléphone doit être au format +(241) 77-22-71-07.',
                 'role.required' => 'Le rôle est obligatoire.',
                 'service.required' => 'Le service est obligatoire.',
+                'matricule.required' => 'Le matricule est obligatoire.',
+                'matricule.regex' => 'Le matricule doit être au format QQAAABBVVCC12345ZDZ456',
                 'role.in' => 'Le rôle sélectionné est invalide.',
 
                 ]
@@ -179,8 +192,20 @@ class UserController extends Controller
                 $validatedData['profile_picture'] = $profile_picture_name;
             }
 
-            $validatedData['service_id'] = $validatedData['service']; // Assigner l'id du service à service_id
-            unset($validatedData['service']); // Supprimer la clé service du tableau de données
+            // $validatedData['service_id'] = $validatedData['service']; // Assigner l'id du service à service_id
+            // unset($validatedData['service']); // Supprimer la clé service du tableau de données
+            // $validatedData['departure_id'] = $validatedData['departure']; // Assigner l'id du departure à departure_id
+            // unset($validatedData['departure']); // Supprimer la clé departure du tableau de données
+
+            if (isset($validatedData['service'])) {
+                $validatedData['service_id'] = $validatedData['service'];
+                unset($validatedData['service']);
+            }
+
+            if (isset($validatedData['departure'])) {
+                $validatedData['departure_id'] = $validatedData['departure'];
+                unset($validatedData['departure']);
+            }
 
             // Mise à jour des champs du personnel
             $user->update($validatedData);
@@ -282,4 +307,23 @@ class UserController extends Controller
         $services = Service::all();//Services disponibles
         return view('admin.users.profil', compact('user','services'));
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+        $users = \App\Models\User::where('name', 'LIKE', "%{$query}%")
+                                 ->orWhere('first_name', 'LIKE', "%{$query}%")
+                                 ->limit(10)
+                                 ->get(['id', 'name', 'first_name']);
+
+        return response()->json($users);
+    }
+
+    public function getUsersByService($serviceId)
+    {
+        $users = \App\Models\User::where('service_id', $serviceId)->get();
+        return response()->json($users);
+    }
+
+
 }
