@@ -51,7 +51,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Service::class);
     }
-    public function departures()
+    public function departure()
     {
         return $this->belongsTo(ReasonForDeparture::class);
     }

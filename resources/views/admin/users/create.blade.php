@@ -188,9 +188,9 @@
             </div>
 
             <div id="departure_div" style="display: none;">
-                <label for="departure_id">Raisons du départ <span class="text-danger">*</span></label>
+                <label for="departure_id">Motif du départ <span class="text-danger">*</span></label>
                 <select id="departure_id" name="departure_id" class="form-input" required>
-                    <option value="">Sélectionner un départ</option>
+                    <option value="">Sélectionner un motif de départ</option>
                     @foreach($departures as $departure)
                         <option value="{{ $departure->id }}" {{ old('departure_id') == $departure->id ? 'selected' : '' }}>
                             {{ $departure->name }}

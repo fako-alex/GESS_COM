@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PlanningController;
@@ -47,16 +48,23 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::put('services/update/{id}', [ServiceController::class, 'update_services'])->name('admin.services.update.submit');
     // Fin des services
 
-    // Gestion des motifs de départ d'un membre du personnel reason_departure
+    // Gestion des motifs de départ d'un membre du personnel
     Route::get('/departures/create',[ReasonForDepartureController::class, 'create'])->name('admin.departures.create');
     Route::post('departures/create',[ReasonForDepartureController::class, 'save'])->name('admin.departures.save');
     Route::get('departures/list',[ReasonForDepartureController::class, 'list'])->name('admin.departures.list');
     Route::get('departures/delete/{id}', [ReasonForDepartureController::class, 'delete_departures'])->name('admin.departures.delete');
-
     Route::get('departures/update/{id}',[ReasonForDepartureController::class, 'edit_departures'])->name('admin.departures.update');
     Route::put('departures/update/{id}', [ReasonForDepartureController::class, 'update_departures'])->name('admin.departures.update.submit');
     // Fin de gestion des motifs de départ d'un membre du personnel
 
+    // Gestion des absences d'un membre du personnel
+    Route::get('/absences/create',[AbsenceController::class, 'create'])->name('admin.absences.create');
+    Route::post('absences/create',[AbsenceController::class, 'save'])->name('admin.absences.save');
+    Route::get('absences/list',[AbsenceController::class, 'list'])->name('admin.absences.list');
+    Route::get('absences/delete/{id}', [AbsenceController::class, 'delete_absences'])->name('admin.absences.delete');
+    Route::get('absences/update/{id}',[AbsenceController::class, 'edit_absences'])->name('admin.absences.update');
+    Route::put('absences/update/{id}', [AbsenceController::class, 'update_absences'])->name('admin.absences.update.submit');
+    // Fin de gestion des absences d'un membre du personnel
 
 
 

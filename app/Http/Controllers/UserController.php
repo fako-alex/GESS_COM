@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\File;
 class UserController extends Controller
 {
     public function create(){
-        // $user = null;
+
         $services = Service::all();
         $departures = ReasonForDeparture::all();
         return view('admin.users.create', compact('services','departures'));
@@ -98,7 +98,6 @@ class UserController extends Controller
     public function list(){
 
         $users = User::latest('id')->get();
-        // $users = User::with('departures')->latest('id')->get();
         return view('admin.users.list', compact('users'));
     }
 
