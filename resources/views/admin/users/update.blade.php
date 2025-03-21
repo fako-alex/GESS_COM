@@ -122,6 +122,13 @@
                 @endif
             </div>
 
+            <div>
+                <label for="matricule">Matricule <span class="text-danger">*</span></label>
+                <input type="matricule" id="matricule" name="matricule" value="{{ old('matricule', $user->matricule) }}" class="form-input" placeholder="Entrez votre matricule" required>
+                @if($errors->has('matricule'))
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('matricule') }}</span>
+                @endif
+            </div>
 
             <div>
                 <label for="birth_date">Date de naissance <span class="text-danger">*</span></label>
@@ -173,9 +180,25 @@
 
             <div>
                 <label for="departure_date">Date de départ</label>
-                <input id="departure_date" value="{{ old('departure_date', $user->departure_date) }}" name="departure_date" type="date" class="form-input">
+                <input id="departure_date" value="{{ old('departure_date', $user->departure_date) }}" name="departure_date" type="date" class="form-input" onchange="toggleDepartureDiv()">
                 @if($errors->has('departure_date'))
                     <span class="text-danger badge-outline-danger">{{ $errors->first('departure_date') }}</span>
+                @endif
+            </div>
+
+            <!-- Le div contenant la raison du départ, il sera affiché si departure_date est non vide -->
+            <div id="departure_div" style="display: {{ $user->departure_date || old('departure_date') || request('departure_date') ? 'block' : 'none' }};">
+                <label for="departure_id">Motif du départ <span class="text-danger">*</span></label>
+                <select id="departure_id" name="departure_id" class="form-input" required>
+                    <option value="">Sélectionner un motif de départ</option>
+                    @foreach($departures as $departure)
+                        <option value="{{ $departure->id }}" {{ old('departure_id', $user->departure_id) == $departure->id ? 'selected' : '' }}>
+                            {{ $departure->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @if($errors->has('departure_id'))
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('departure_id') }}</span>
                 @endif
             </div>
 
@@ -301,29 +324,6 @@
         }
     }
 
-    // Fonction qui gère l'affichage dynamique des champs
-    function toggleFields() {
-        var role = document.getElementById('role').value;
-        var classLevelField = document.getElementById('class_level_field');
-        var departmentField = document.getElementById('department_field');
-
-        // Afficher/Masquer les champs en fonction du rôle sélectionné
-        if (role === 'Élève') {
-            classLevelField.style.display = 'block';
-            departmentField.style.display = 'none';
-        } else if (role === 'Professeur') {
-            departmentField.style.display = 'block';
-            classLevelField.style.display = 'none';
-        } else if (role === 'Bibliothécaire') {
-            classLevelField.style.display = 'none';
-            departmentField.style.display = 'none';
-        } else {
-            // Masque les deux champs si aucun rôle n'est sélectionné
-            classLevelField.style.display = 'none';
-            departmentField.style.display = 'none';
-        }
-    }
-
     // Appeler la fonction pour initialiser l'état des champs selon le rôle sélectionné
     toggleFields();
 </script>
@@ -344,4 +344,24 @@
         toggleFields();
     });
 </script>
+
+<script>
+    function toggleDepartureDiv() {
+        const departureDate = document.getElementById('departure_date').value;
+        const departureDiv = document.getElementById('departure_div');
+
+        // Si une date de départ est sélectionnée, afficher la section
+        if (departureDate) {
+            departureDiv.style.display = 'block';
+        } else {
+            departureDiv.style.display = 'none';
+        }
+    }
+
+    // Initialiser l'affichage en fonction de la valeur de departure_date au chargement de la page
+    window.onload = function() {
+        toggleDepartureDiv(); // Vérifie si la date de départ est déjà sélectionnée au chargement
+    };
+</script>
+
 @endsection

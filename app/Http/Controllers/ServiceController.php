@@ -9,8 +9,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ServiceController extends Controller
 {
-    //$table->string('name');  // Nom du service
-   // $table->string('detail');  // Détail du service
 
     public function create(){
         return view('admin.services.create');
@@ -105,6 +103,18 @@ public function update_services(Request $request, $id)
         Alert::error('Erreur', 'Une erreur s\'est produite lors de la mise à jour: ' . $errors);
         return redirect()->back();  // Redirection vers la page précédente
     }
+}
+
+public function searchServices(Request $request)
+{
+    // Recherche les services qui correspondent à la requête
+    $query = $request->input('q', '');
+
+    $services = Service::where('name', 'LIKE', "%{$query}%")
+                       ->limit(10)
+                       ->get(['id', 'name']);
+
+    return response()->json($services);
 }
 
 

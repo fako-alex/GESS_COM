@@ -17,6 +17,7 @@ class DefaultUserSeeder extends Seeder
                 'first_name' => 'ADMIN ADMIN', // Prénom du personnel
                 'email' => 'adminalex@gmail.com', // Email du personnel
                 'service' => '1', // Service du personnel
+                'matricule' => 'matricule', // Matricule personnel
                 'password' => Hash::make('Cisco1234@'), // Mot de passe du personnel
                 'role' => 'Admin', // Rôle : Admin
                 'status' => 'Actif', // Statut : Actif

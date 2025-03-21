@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Absence extends Model
 {
     use HasFactory;
-    protected $table = 'services';
+    protected $table = 'absences';
 
-    protected $fillable = ['name', 'detail', 'added_by'];
-    public function addedByservice()
+    protected $fillable = ['name','start_date','end_date', 'detail', 'added_by'];
+    public function addedByabsence()
     {
         return $this->belongsTo(User::class, 'added_by');
     }
