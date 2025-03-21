@@ -63,7 +63,7 @@
         <div class="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-3">
             <div>
                 <label for="name">Nom(s)<span class="text-danger">*</span></label>
-                <input id="name" name="name" value="{{ old('name') }}" type="text" placeholder="Exp : FAKO" class="form-input" required>
+                <input id="name" name="name" value="{{ old('name') }}" type="text" placeholder="Exp : FAKO TIAKO" class="form-input" required>
                 @if($errors->has('name'))
                     <span class="text-danger badge-outline-danger">{{ $errors->first('name') }}</span>
                 @endif
@@ -106,17 +106,28 @@
             </div>
 
             <div>
-                <label for="service">Service <span class="text-danger">*</span></label>
-                <select id="service" name="service" class="form-input" required>
+                <label for="service_id">Service <span class="text-danger">*</span></label>
+                <select id="service_id" name="service_id" class="form-input" required>
                     <option value="">Sélectionner un service</option>
                     @foreach($services as $service)
-                        <option value="{{ $service->id }}" {{ old('service') == $service->id ? 'selected' : '' }}>
-                            {{ $service->name }} <!-- ou un autre champ que tu veux afficher -->
-                        </option>
+                    <option value="{{ $service->id }}" {{ old('service_id') == $service->id ? 'selected' : '' }}>
+                        {{ $service->name }} <!-- ou un autre champ que tu veux afficher -->
+                    </option>
                     @endforeach
                 </select>
-                @if($errors->has('service'))
-                    <span class="text-danger badge-outline-danger">{{ $errors->first('service') }}</span>
+                @if($errors->has('service_id'))
+                <span class="text-danger badge-outline-danger">{{ $errors->first('service_id') }}</span>
+                @endif
+            </div>
+
+            <div>
+                <label for="matricule">Matricule <span class="text-danger">*</span></label>
+                <input type="text" id="matricule" name="matricule" class="form-input"
+                       placeholder="Entrez votre matricule" required
+                       pattern="[A-Z0-9]+" maxlength="20"
+                       oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '')">
+                @if($errors->has('matricule'))
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('matricule') }}</span>
                 @endif
             </div>
 
@@ -138,7 +149,7 @@
 
             <div>
                 <label for="country">Pays</label>
-                <input id="country" value="{{ old('country') }}" name="country" type="text" placeholder="Lieu de naissance" class="form-input">
+                <input id="country" value="{{ old('country') }}" name="country" type="text" placeholder="Votre Pays" class="form-input">
                 @if($errors->has('country'))
                     <span class="text-danger badge-outline-danger">{{ $errors->first('country') }}</span>
                 @endif
@@ -146,7 +157,7 @@
 
             <div>
                 <label for="city">Ville</label>
-                <input id="city" value="{{ old('city') }}" name="city" type="text" placeholder="Lieu de naissance" class="form-input">
+                <input id="city" value="{{ old('city') }}" name="city" type="text" placeholder="Votre ville" class="form-input">
                 @if($errors->has('city'))
                     <span class="text-danger badge-outline-danger">{{ $errors->first('city') }}</span>
                 @endif
@@ -154,7 +165,7 @@
 
             <div>
                 <label for="neighborhood">Quartier <span class="text-danger">*</span></label>
-                <input id="neighborhood" value="{{ old('neighborhood') }}" name="neighborhood" type="text" placeholder="Lieu de naissance" class="form-input" required>
+                <input id="neighborhood" value="{{ old('neighborhood') }}" name="neighborhood" type="text" placeholder="Votre Quartier" class="form-input" required>
                 @if($errors->has('neighborhood'))
                     <span class="text-danger badge-outline-danger">{{ $errors->first('neighborhood') }}</span>
                 @endif
@@ -162,7 +173,7 @@
 
             <div>
                 <label for="hiring_date">Date d'emboche</label>
-                <input id="hiring_date" value="{{ old('hiring_date') }}" name="hiring_date" type="date" placeholder="Lieu de naissance" class="form-input">
+                <input id="hiring_date" value="{{ old('hiring_date') }}" name="hiring_date" type="date" class="form-input">
                 @if($errors->has('hiring_date'))
                     <span class="text-danger badge-outline-danger">{{ $errors->first('hiring_date') }}</span>
                 @endif
@@ -170,11 +181,28 @@
 
             <div>
                 <label for="departure_date">Date de départ</label>
-                <input id="departure_date" value="{{ old('departure_date') }}" name="departure_date" type="date" placeholder="Lieu de naissance" class="form-input">
+                <input id="departure_date" value="{{ old('departure_date') }}" name="departure_date" type="date" class="form-input" onchange="toggleDepartureDiv()">
                 @if($errors->has('departure_date'))
                     <span class="text-danger badge-outline-danger">{{ $errors->first('departure_date') }}</span>
                 @endif
             </div>
+
+            <div id="departure_div" style="display: none;">
+                <label for="departure_id">Raisons du départ <span class="text-danger">*</span></label>
+                <select id="departure_id" name="departure_id" class="form-input" required>
+                    <option value="">Sélectionner un départ</option>
+                    @foreach($departures as $departure)
+                        <option value="{{ $departure->id }}" {{ old('departure_id') == $departure->id ? 'selected' : '' }}>
+                            {{ $departure->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @if($errors->has('departure_id'))
+                    <span class="text-danger badge-outline-danger">{{ $errors->first('departure_id') }}</span>
+                @endif
+            </div>
+
+
 
             <div>
                 <label for="role">Rôle <span class="text-danger">*</span></label>
@@ -333,5 +361,47 @@
         toggleFields();
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const departureDate = document.getElementById("departure_date");
+        const departureDiv = document.getElementById("departure_div");
+
+        function toggleDepartureField() {
+            if (departureDate.value) {
+                departureDiv.style.display = "block";
+            } else {
+                departureDiv.style.display = "none";
+            }
+        }
+
+        // Vérifier au chargement si une date est déjà sélectionnée
+        toggleDepartureField();
+
+        // Ajouter un écouteur d'événement pour détecter les changements
+        departureDate.addEventListener("change", toggleDepartureField);
+    });
+</script>
+
+<script>
+    function toggleDepartureDiv() {
+        const departureDate = document.getElementById('departure_date').value;
+        const departureDiv = document.getElementById('departure_div');
+
+        // Si une date de départ est sélectionnée, afficher la section
+        if (departureDate) {
+            departureDiv.style.display = 'block';
+        } else {
+            departureDiv.style.display = 'none';
+        }
+    }
+
+    // Initialiser l'affichage en fonction de la valeur de departure_date au chargement de la page
+    window.onload = function() {
+        toggleDepartureDiv();
+    };
+</script>
+
+
 
 @endsection

@@ -3,26 +3,29 @@
 
 @section('content')
 
-<form method="post" action="{{ route('admin.services.save') }}" class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]">
+<form method="post" action="{{ route('admin.departures.save') }}" class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]">
     @csrf
     <div class="panel">
         <div class="flex items-center justify-between mb-5">
-            <h5 class="text-lg font-semibold dark:text-white-light">Ajout des services</h5>
+            <h5 class="text-lg font-semibold dark:text-white-light">Ajouter raison de départ</h5>
         </div>
         <div class="mb-5">
             <ol class="flex font-semibold text-primary dark:text-white-dark">
                 <li class="bg-[#ebedf2] ltr:rounded-l-md rtl:rounded-r-md dark:bg-[#1b2e4b]">
-                    <a href="javascript:;"
-                        class="relative flex h-full items-center p-1.5 before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] hover:text-primary/70 ltr:pl-3 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-3 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180 dark:before:border-l-[#1b2e4b] dark:hover:text-white-dark/70">Services</a>
+                    <a href="javascript:;" class="relative flex h-full items-center p-1.5 before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] hover:text-primary/70 ltr:pl-3 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-3 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180 dark:before:border-l-[#1b2e4b] dark:hover:text-white-dark/70">
+                        Raisons de départ
+                    </a>
                 </li>
                 <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]">
                     <a
-                        class="relative flex h-full items-center bg-primary p-1.5 text-white-light before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary ltr:pl-6 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-6 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180">Ajouter un service</a>
+                        class="relative flex h-full items-center bg-primary p-1.5 text-white-light before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary ltr:pl-6 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-6 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180">
+                        Ajouter une raison de départ
+                    </a>
                 </li>
             </ol>
         </div>
         <div class="flex justify-end"> <!-- Ajout de mb-4 pour l'espacement -->
-            <a href="{{ url('services/list') }}" class="btn btn-primary">
+            <a href="{{ url('departures/list') }}" class="btn btn-primary">
                 <!-- SVG for Add Book Icon -->
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2">
                     <path d="M2 5.5L3.21429 7L7.5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -32,7 +35,7 @@
                     <path opacity="0.5" d="M22 12L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                     <path d="M22 5L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
                 </svg>
-                Liste des services
+                Liste des raisons de départ
             </a>
         </div>
     </div>
@@ -51,18 +54,18 @@
     </div>
     <div class="grid grid-cols-3 gap-5">
         <div class="col-span-1">
-            <label for="name">Nom du service <span class="text-danger">*</span></label>
+            <label for="name">Titre de la raison de départ <span class="text-danger">*</span></label>
             <input id="name" name="name" value="{{ old('name') }}" type="text"
-                   placeholder="Exp : Service SOFT" class="w-full form-input" required>
+                   placeholder="Exp : Licenciement" class="w-full form-input" required>
             @if($errors->has('name'))
                 <span class="text-danger badge-outline-danger">{{ $errors->first('name') }}</span>
             @endif
         </div>
 
         <div class="col-span-2">
-            <label for="detail">Description du service. <span class="text-danger"></span></label>
+            <label for="detail">Description de la raison de départ <span class="text-danger"></span></label>
             <textarea id="detail" name="detail" value="{{ old('detail') }}" class="w-full form-textarea"
-                      placeholder="Exp : Le service SOFT est trop cool en ce moment"></textarea>
+                      placeholder="Exp : Faute grave exposant la structure"></textarea>
             @if($errors->has('detail'))
                 <span class="text-danger badge-outline-danger">{{ $errors->first('detail') }}</span>
             @endif

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('phone')->nullable();  // N° de téléphone
             $table->string('email')->unique();  // Email unique
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
+            $table->foreignId('departure_id')->constrained()->onDelete('cascade');
+            $table->string('matricule')->nullable();  // Matricule
             $table->timestamp('email_verified_at')->nullable();  // Date de vérification de l'email
             $table->string('birth_place')->nullable();  // Lieu de naissance
             $table->date('birth_date')->nullable();  // Date de naissance
