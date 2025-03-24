@@ -3,7 +3,7 @@
         class="sidebar fixed bottom-0 top-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300">
         <div class="h-full bg-white dark:bg-[#0e1726]">
             <div class="flex items-center justify-between px-4 py-3">
-                <a href="{{ url('/admin/dashboard')}}" class="flex items-center main-logo shrink-0">
+                <a href="{{ url('/dashboard')}}" class="flex items-center main-logo shrink-0">
                     @if (Auth::user()->profile_picture)
                     <img class="ml-[5px] w-8 flex-none"
                         src="{{ asset('documents/profil/users/' . Auth::user()->profile_picture)}}" alt="image">
@@ -15,7 +15,6 @@
                         class="truncate max-w-[110px] block align-middle text-2xl font-semibold ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light lg:inline">
                         {{ Auth::user()->name }}
                     </span>
-
                 </a>
                 <a href="javascript:;"
                     class="flex items-center w-8 h-8 transition duration-300 rounded-full collapse-icon hover:bg-gray-500/10 rtl:rotate-180 dark:text-white-light dark:hover:bg-dark-light/10"

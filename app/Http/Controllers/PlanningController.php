@@ -124,10 +124,6 @@ class PlanningController extends Controller
 
 
 
-
-    /**
-     * Update the specified resource in storage.
-     */
     // public function update_planning(Request $request, $id)
     // {
     //     $userId = Auth::id(); // Récupération de l'ID de l'utilisateur authentifié

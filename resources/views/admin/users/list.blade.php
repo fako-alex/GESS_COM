@@ -1,540 +1,560 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<div class="p-6 animate__animated" :class="[$store.app.animation]">
-    <!-- start main content section -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <div class="p-6 animate__animated" :class="[$store.app.animation]">
+        <!-- start main content section -->
 
-    <div x-data="contacts">
-        <div class="flex flex-wrap items-center justify-between gap-4">
+        <div x-data="contacts">
             <div class="flex flex-wrap items-center justify-between gap-4">
-                <ol class="flex font-semibold text-primary dark:text-white-dark">
-                    <li class="bg-[#ebedf2] ltr:rounded-l-md rtl:rounded-r-md dark:bg-[#1b2e4b]">
-                        <a href="javascript:;"
-                            class="relative flex h-full items-center p-1.5 before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] hover:text-primary/70 ltr:pl-3 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-3 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180 dark:before:border-l-[#1b2e4b] dark:hover:text-white-dark/70">Personnels</a>
-                    </li>
-                    <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]">
-                        <a
-                            class="relative flex h-full items-center bg-primary p-1.5 text-white-light before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary ltr:pl-6 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-6 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180">Liste
-                            du personnel</a>
-                    </li>
-                </ol>
-            </div>
-            <div class="flex flex-col w-full gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
-                <div class="flex gap-3">
-                    <div>
-                        <a href="{{route('admin.users.create')}}" class="btn btn-primary">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ltr:mr-2 rtl:ml-2">
-                                <circle cx="10" cy="6" r="4" stroke="currentColor" stroke-width="1.5"></circle>
-                                <path opacity="0.5"
-                                    d="M18 17.5C18 19.9853 18 22 10 22C2 22 2 19.9853 2 17.5C2 15.0147 5.58172 13 10 13C14.4183 13 18 15.0147 18 17.5Z"
-                                    stroke="currentColor" stroke-width="1.5"></path>
-                                <path d="M21 10H19M19 10H17M19 10L19 8M19 10L19 12" stroke="currentColor"
-                                    stroke-width="1.5" stroke-linecap="round"></path>
-                            </svg>
-                            Ajout du personnel
-                        </a>
-                    </div>
-                    <div>
-                        <button type="button" class="p-2 text-white btn btn-outline-primary bg-primary"
-                            :class="{ 'bg-primary text-white': displayType === 'list' }"
-                            @click="setDisplayType('list')">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
-                                <path d="M2 5.5L3.21429 7L7.5 3" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path opacity="0.5" d="M2 12.5L3.21429 14L7.5 10" stroke="currentColor"
-                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M2 19.5L3.21429 21L7.5 17" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M22 19L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                                </path>
-                                <path opacity="0.5" d="M22 12L12 12" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round"></path>
-                                <path d="M22 5L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div>
-                        <button type="button" class="p-2 btn btn-outline-primary"
-                            :class="{ 'bg-primary text-white': displayType === 'grid' }"
-                            @click="setDisplayType('grid')">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
-                                <path opacity="0.5"
-                                    d="M2.5 6.5C2.5 4.61438 2.5 3.67157 3.08579 3.08579C3.67157 2.5 4.61438 2.5 6.5 2.5C8.38562 2.5 9.32843 2.5 9.91421 3.08579C10.5 3.67157 10.5 4.61438 10.5 6.5C10.5 8.38562 10.5 9.32843 9.91421 9.91421C9.32843 10.5 8.38562 10.5 6.5 10.5C4.61438 10.5 3.67157 10.5 3.08579 9.91421C2.5 9.32843 2.5 8.38562 2.5 6.5Z"
-                                    stroke="currentColor" stroke-width="1.5"></path>
-                                <path opacity="0.5"
-                                    d="M13.5 17.5C13.5 15.6144 13.5 14.6716 14.0858 14.0858C14.6716 13.5 15.6144 13.5 17.5 13.5C19.3856 13.5 20.3284 13.5 20.9142 14.0858C21.5 14.6716 21.5 15.6144 21.5 17.5C21.5 19.3856 21.5 20.3284 20.9142 20.9142C20.3284 21.5 19.3856 21.5 17.5 21.5C15.6144 21.5 14.6716 21.5 14.0858 20.9142C13.5 20.3284 13.5 19.3856 13.5 17.5Z"
-                                    stroke="currentColor" stroke-width="1.5"></path>
-                                <path
-                                    d="M2.5 17.5C2.5 15.6144 2.5 14.6716 3.08579 14.0858C3.67157 13.5 4.61438 13.5 6.5 13.5C8.38562 13.5 9.32843 13.5 9.91421 14.0858C10.5 14.6716 10.5 15.6144 10.5 17.5C10.5 19.3856 10.5 20.3284 9.91421 20.9142C9.32843 21.5 8.38562 21.5 6.5 21.5C4.61438 21.5 3.67157 21.5 3.08579 20.9142C2.5 20.3284 2.5 19.3856 2.5 17.5Z"
-                                    stroke="currentColor" stroke-width="1.5"></path>
-                                <path
-                                    d="M13.5 6.5C13.5 4.61438 13.5 3.67157 14.0858 3.08579C14.6716 2.5 15.6144 2.5 17.5 2.5C19.3856 2.5 20.3284 2.5 20.9142 3.08579C21.5 3.67157 21.5 4.61438 21.5 6.5C21.5 8.38562 21.5 9.32843 20.9142 9.91421C20.3284 10.5 19.3856 10.5 17.5 10.5C15.6144 10.5 14.6716 10.5 14.0858 9.91421C13.5 9.32843 13.5 8.38562 13.5 6.5Z"
-                                    stroke="currentColor" stroke-width="1.5"></path>
-                            </svg>
-                        </button>
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <ol class="flex font-semibold text-primary dark:text-white-dark">
+                        <li class="bg-[#ebedf2] ltr:rounded-l-md rtl:rounded-r-md dark:bg-[#1b2e4b]">
+                            <a href="javascript:;"
+                                class="relative flex h-full items-center p-1.5 before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] hover:text-primary/70 ltr:pl-3 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-3 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180 dark:before:border-l-[#1b2e4b] dark:hover:text-white-dark/70">Personnels</a>
+                        </li>
+                        <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]">
+                            <a
+                                class="relative flex h-full items-center bg-primary p-1.5 text-white-light before:absolute before:inset-y-0 before:z-[1] before:m-auto before:h-0 before:w-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary ltr:pl-6 ltr:pr-2 ltr:before:-right-[15px] rtl:pr-6 rtl:pl-2 rtl:before:-left-[15px] rtl:before:rotate-180">Liste
+                                du personnel</a>
+                        </li>
+                    </ol>
+                </div>
+                <div class="flex flex-col w-full gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
+                    <div class="flex gap-3">
+                        <div>
+                            <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ltr:mr-2 rtl:ml-2">
+                                    <circle cx="10" cy="6" r="4" stroke="currentColor" stroke-width="1.5">
+                                    </circle>
+                                    <path opacity="0.5"
+                                        d="M18 17.5C18 19.9853 18 22 10 22C2 22 2 19.9853 2 17.5C2 15.0147 5.58172 13 10 13C14.4183 13 18 15.0147 18 17.5Z"
+                                        stroke="currentColor" stroke-width="1.5"></path>
+                                    <path d="M21 10H19M19 10H17M19 10L19 8M19 10L19 12" stroke="currentColor"
+                                        stroke-width="1.5" stroke-linecap="round"></path>
+                                </svg>
+                                Ajout du personnel
+                            </a>
+                        </div>
+                        <div>
+                            <button type="button" class="p-2 text-white btn btn-outline-primary bg-primary"
+                                :class="{ 'bg-primary text-white': displayType === 'list' }"
+                                @click="setDisplayType('list')">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
+                                    <path d="M2 5.5L3.21429 7L7.5 3" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path opacity="0.5" d="M2 12.5L3.21429 14L7.5 10" stroke="currentColor"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M2 19.5L3.21429 21L7.5 17" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M22 19L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                                    </path>
+                                    <path opacity="0.5" d="M22 12L12 12" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round"></path>
+                                    <path d="M22 5L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" class="p-2 btn btn-outline-primary"
+                                :class="{ 'bg-primary text-white': displayType === 'grid' }"
+                                @click="setDisplayType('grid')">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" class="w-5 h-5">
+                                    <path opacity="0.5"
+                                        d="M2.5 6.5C2.5 4.61438 2.5 3.67157 3.08579 3.08579C3.67157 2.5 4.61438 2.5 6.5 2.5C8.38562 2.5 9.32843 2.5 9.91421 3.08579C10.5 3.67157 10.5 4.61438 10.5 6.5C10.5 8.38562 10.5 9.32843 9.91421 9.91421C9.32843 10.5 8.38562 10.5 6.5 10.5C4.61438 10.5 3.67157 10.5 3.08579 9.91421C2.5 9.32843 2.5 8.38562 2.5 6.5Z"
+                                        stroke="currentColor" stroke-width="1.5"></path>
+                                    <path opacity="0.5"
+                                        d="M13.5 17.5C13.5 15.6144 13.5 14.6716 14.0858 14.0858C14.6716 13.5 15.6144 13.5 17.5 13.5C19.3856 13.5 20.3284 13.5 20.9142 14.0858C21.5 14.6716 21.5 15.6144 21.5 17.5C21.5 19.3856 21.5 20.3284 20.9142 20.9142C20.3284 21.5 19.3856 21.5 17.5 21.5C15.6144 21.5 14.6716 21.5 14.0858 20.9142C13.5 20.3284 13.5 19.3856 13.5 17.5Z"
+                                        stroke="currentColor" stroke-width="1.5"></path>
+                                    <path
+                                        d="M2.5 17.5C2.5 15.6144 2.5 14.6716 3.08579 14.0858C3.67157 13.5 4.61438 13.5 6.5 13.5C8.38562 13.5 9.32843 13.5 9.91421 14.0858C10.5 14.6716 10.5 15.6144 10.5 17.5C10.5 19.3856 10.5 20.3284 9.91421 20.9142C9.32843 21.5 8.38562 21.5 6.5 21.5C4.61438 21.5 3.67157 21.5 3.08579 20.9142C2.5 20.3284 2.5 19.3856 2.5 17.5Z"
+                                        stroke="currentColor" stroke-width="1.5"></path>
+                                    <path
+                                        d="M13.5 6.5C13.5 4.61438 13.5 3.67157 14.0858 3.08579C14.6716 2.5 15.6144 2.5 17.5 2.5C19.3856 2.5 20.3284 2.5 20.9142 3.08579C21.5 3.67157 21.5 4.61438 21.5 6.5C21.5 8.38562 21.5 9.32843 20.9142 9.91421C20.3284 10.5 19.3856 10.5 17.5 10.5C15.6144 10.5 14.6716 10.5 14.0858 9.91421C13.5 9.32843 13.5 8.38562 13.5 6.5Z"
+                                        stroke="currentColor" stroke-width="1.5"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="flex flex-wrap items-center mt-5 mb-5 " x-data="exportTable()" x-init="initTable()">
-            <button type="button" class="m-1 btn btn-primary btn-sm" @click="exportTable('txt')">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="w-5 h-5 ltr:mr-2 rtl:ml-2">
-                    <path
-                        d="M15.3929 4.05365L14.8912 4.61112L15.3929 4.05365ZM19.3517 7.61654L18.85 8.17402L19.3517 7.61654ZM21.654 10.1541L20.9689 10.4592V10.4592L21.654 10.1541ZM3.17157 20.8284L3.7019 20.2981H3.7019L3.17157 20.8284ZM20.8284 20.8284L20.2981 20.2981L20.2981 20.2981L20.8284 20.8284ZM14 21.25H10V22.75H14V21.25ZM2.75 14V10H1.25V14H2.75ZM21.25 13.5629V14H22.75V13.5629H21.25ZM14.8912 4.61112L18.85 8.17402L19.8534 7.05907L15.8947 3.49618L14.8912 4.61112ZM22.75 13.5629C22.75 11.8745 22.7651 10.8055 22.3391 9.84897L20.9689 10.4592C21.2349 11.0565 21.25 11.742 21.25 13.5629H22.75ZM18.85 8.17402C20.2034 9.3921 20.7029 9.86199 20.9689 10.4592L22.3391 9.84897C21.9131 8.89241 21.1084 8.18853 19.8534 7.05907L18.85 8.17402ZM10.0298 2.75C11.6116 2.75 12.2085 2.76158 12.7405 2.96573L13.2779 1.5653C12.4261 1.23842 11.498 1.25 10.0298 1.25V2.75ZM15.8947 3.49618C14.8087 2.51878 14.1297 1.89214 13.2779 1.5653L12.7405 2.96573C13.2727 3.16993 13.7215 3.55836 14.8912 4.61112L15.8947 3.49618ZM10 21.25C8.09318 21.25 6.73851 21.2484 5.71085 21.1102C4.70476 20.975 4.12511 20.7213 3.7019 20.2981L2.64124 21.3588C3.38961 22.1071 4.33855 22.4392 5.51098 22.5969C6.66182 22.7516 8.13558 22.75 10 22.75V21.25ZM1.25 14C1.25 15.8644 1.24841 17.3382 1.40313 18.489C1.56076 19.6614 1.89288 20.6104 2.64124 21.3588L3.7019 20.2981C3.27869 19.8749 3.02502 19.2952 2.88976 18.2892C2.75159 17.2615 2.75 15.9068 2.75 14H1.25ZM14 22.75C15.8644 22.75 17.3382 22.7516 18.489 22.5969C19.6614 22.4392 20.6104 22.1071 21.3588 21.3588L20.2981 20.2981C19.8749 20.7213 19.2952 20.975 18.2892 21.1102C17.2615 21.2484 15.9068 21.25 14 21.25V22.75ZM21.25 14C21.25 15.9068 21.2484 17.2615 21.1102 18.2892C20.975 19.2952 20.7213 19.8749 20.2981 20.2981L21.3588 21.3588C22.1071 20.6104 22.4392 19.6614 22.5969 18.489C22.7516 17.3382 22.75 15.8644 22.75 14H21.25ZM2.75 10C2.75 8.09318 2.75159 6.73851 2.88976 5.71085C3.02502 4.70476 3.27869 4.12511 3.7019 3.7019L2.64124 2.64124C1.89288 3.38961 1.56076 4.33855 1.40313 5.51098C1.24841 6.66182 1.25 8.13558 1.25 10H2.75ZM10.0298 1.25C8.15538 1.25 6.67442 1.24842 5.51887 1.40307C4.34232 1.56054 3.39019 1.8923 2.64124 2.64124L3.7019 3.7019C4.12453 3.27928 4.70596 3.02525 5.71785 2.88982C6.75075 2.75158 8.11311 2.75 10.0298 2.75V1.25Z"
-                        fill="currentColor"></path>
-                    <path opacity="0.5" d="M6 14.5H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                    </path>
-                    <path opacity="0.5" d="M6 18H11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                    </path>
-                    <path opacity="0.5"
-                        d="M13 2.5V5C13 7.35702 13 8.53553 13.7322 9.26777C14.4645 10 15.643 10 18 10H22"
-                        stroke="currentColor" stroke-width="1.5"></path>
-                </svg>
-                TEXTE
-            </button>
-            <button type="button" class="m-1 btn btn-primary btn-sm" @click="exportTable('excel')">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="w-5 h-5 ltr:mr-2 rtl:ml-2">
-                    <path
-                        d="M15.3929 4.05365L14.8912 4.61112L15.3929 4.05365ZM19.3517 7.61654L18.85 8.17402L19.3517 7.61654ZM21.654 10.1541L20.9689 10.4592V10.4592L21.654 10.1541ZM3.17157 20.8284L3.7019 20.2981H3.7019L3.17157 20.8284ZM20.8284 20.8284L20.2981 20.2981L20.2981 20.2981L20.8284 20.8284ZM14 21.25H10V22.75H14V21.25ZM2.75 14V10H1.25V14H2.75ZM21.25 13.5629V14H22.75V13.5629H21.25ZM14.8912 4.61112L18.85 8.17402L19.8534 7.05907L15.8947 3.49618L14.8912 4.61112ZM22.75 13.5629C22.75 11.8745 22.7651 10.8055 22.3391 9.84897L20.9689 10.4592C21.2349 11.0565 21.25 11.742 21.25 13.5629H22.75ZM18.85 8.17402C20.2034 9.3921 20.7029 9.86199 20.9689 10.4592L22.3391 9.84897C21.9131 8.89241 21.1084 8.18853 19.8534 7.05907L18.85 8.17402ZM10.0298 2.75C11.6116 2.75 12.2085 2.76158 12.7405 2.96573L13.2779 1.5653C12.4261 1.23842 11.498 1.25 10.0298 1.25V2.75ZM15.8947 3.49618C14.8087 2.51878 14.1297 1.89214 13.2779 1.5653L12.7405 2.96573C13.2727 3.16993 13.7215 3.55836 14.8912 4.61112L15.8947 3.49618ZM10 21.25C8.09318 21.25 6.73851 21.2484 5.71085 21.1102C4.70476 20.975 4.12511 20.7213 3.7019 20.2981L2.64124 21.3588C3.38961 22.1071 4.33855 22.4392 5.51098 22.5969C6.66182 22.7516 8.13558 22.75 10 22.75V21.25ZM1.25 14C1.25 15.8644 1.24841 17.3382 1.40313 18.489C1.56076 19.6614 1.89288 20.6104 2.64124 21.3588L3.7019 20.2981C3.27869 19.8749 3.02502 19.2952 2.88976 18.2892C2.75159 17.2615 2.75 15.9068 2.75 14H1.25ZM14 22.75C15.8644 22.75 17.3382 22.7516 18.489 22.5969C19.6614 22.4392 20.6104 22.1071 21.3588 21.3588L20.2981 20.2981C19.8749 20.7213 19.2952 20.975 18.2892 21.1102C17.2615 21.2484 15.9068 21.25 14 21.25V22.75ZM21.25 14C21.25 15.9068 21.2484 17.2615 21.1102 18.2892C20.975 19.2952 20.7213 19.8749 20.2981 20.2981L21.3588 21.3588C22.1071 20.6104 22.4392 19.6614 22.5969 18.489C22.7516 17.3382 22.75 15.8644 22.75 14H21.25ZM2.75 10C2.75 8.09318 2.75159 6.73851 2.88976 5.71085C3.02502 4.70476 3.27869 4.12511 3.7019 3.7019L2.64124 2.64124C1.89288 3.38961 1.56076 4.33855 1.40313 5.51098C1.24841 6.66182 1.25 8.13558 1.25 10H2.75ZM10.0298 1.25C8.15538 1.25 6.67442 1.24842 5.51887 1.40307C4.34232 1.56054 3.39019 1.8923 2.64124 2.64124L3.7019 3.7019C4.12453 3.27928 4.70596 3.02525 5.71785 2.88982C6.75075 2.75158 8.11311 2.75 10.0298 2.75V1.25Z"
-                        fill="currentColor"></path>
-                    <path opacity="0.5"
-                        d="M13 2.5V5C13 7.35702 13 8.53553 13.7322 9.26777C14.4645 10 15.643 10 18 10H22"
-                        stroke="currentColor" stroke-width="1.5"></path>
-                    <path opacity="0.5" d="M7 14L6 15L7 16M11.5 16L12.5 17L11.5 18M10 14L8.5 18" stroke="currentColor"
-                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-                EXCEL
-            </button>
-            <button type="button" class="m-1 btn btn-primary btn-sm" @click="printTable">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="w-5 h-5 ltr:mr-2 rtl:ml-2">
-                    <path
-                        d="M6 17.9827C4.44655 17.9359 3.51998 17.7626 2.87868 17.1213C2 16.2426 2 14.8284 2 12C2 9.17157 2 7.75736 2.87868 6.87868C3.75736 6 5.17157 6 8 6H16C18.8284 6 20.2426 6 21.1213 6.87868C22 7.75736 22 9.17157 22 12C22 14.8284 22 16.2426 21.1213 17.1213C20.48 17.7626 19.5535 17.9359 18 17.9827"
-                        stroke="currentColor" stroke-width="1.5"></path>
-                    <path opacity="0.5" d="M9 10H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                    </path>
-                    <path d="M19 14L5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                    <path
-                        d="M18 14V16C18 18.8284 18 20.2426 17.1213 21.1213C16.2426 22 14.8284 22 12 22C9.17157 22 7.75736 22 6.87868 21.1213C6 20.2426 6 18.8284 6 16V14"
-                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                    <path opacity="0.5"
-                        d="M17.9827 6C17.9359 4.44655 17.7626 3.51998 17.1213 2.87868C16.2427 2 14.8284 2 12 2C9.17158 2 7.75737 2 6.87869 2.87868C6.23739 3.51998 6.06414 4.44655 6.01733 6"
-                        stroke="currentColor" stroke-width="1.5"></path>
-                    <circle opacity="0.5" cx="17" cy="10" r="1" fill="currentColor"></circle>
-                    <path opacity="0.5" d="M15 16.5H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                    </path>
-                    <path opacity="0.5" d="M13 19H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                    </path>
-                </svg>
-                IMPRIMER
-            </button>
-        </div>
-        <div class="p-0 mt-5 overflow-hidden border-0">
-            <template x-if="displayType === 'list'">
-                <div class="table-responsive">
-                    <table id="myTable" class="table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>N°</th>
-                                <th>profil</th>
-                                <th>Nom et Prénom</th>
-                                <th>Sexe</th>
-                                <th>N° de téléphone</th>
-                                <th>Adresse email</th>
-                                <th>Service</th>
-                                <th>Matricule</th>
-                                <th>Date de naissance</th>
-                                <th>Lieu de naissance</th>
-                                <th>Pays</th>
-                                <th>Ville</th>
-                                <th>Quartier</th>
-                                <th>Date d'emboche</th>
-                                <th>Date de départ</th>
-                                <th>Motif de départ</th>
-                                <th>Raison d'absence</th>
-                                <th>Date de début d'absence</th>
-                                <th>Date de fin d'absence</th>
-                                <th>Rôle</th>
-                                <th>Statut compte</th>
-                                <th>Créer par</th>
-                                <th>Date de creation</th>
-                                <th class="!text-center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($users as $user)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    <div class="flex items-center w-max">
-                                        <div class="flex-none mr-3">
-                                            <div class="p-1 rounded-full bg-white-dark/30">
-                                                @if ($user->profile_picture)
-                                                <img src="{{ asset('documents/profil/users/' . $user->profile_picture)}}"
-                                                    alt="photo de profile" class="object-cover w-12 h-12 rounded-full">
-                                                @else
-                                                Pas d'images
-                                                @endif
+            <div class="flex flex-wrap items-center mt-5 mb-5 " x-data="exportTable()" x-init="initTable()">
+                <button type="button" class="m-1 btn btn-primary btn-sm" @click="exportTable('txt')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5 ltr:mr-2 rtl:ml-2">
+                        <path
+                            d="M15.3929 4.05365L14.8912 4.61112L15.3929 4.05365ZM19.3517 7.61654L18.85 8.17402L19.3517 7.61654ZM21.654 10.1541L20.9689 10.4592V10.4592L21.654 10.1541ZM3.17157 20.8284L3.7019 20.2981H3.7019L3.17157 20.8284ZM20.8284 20.8284L20.2981 20.2981L20.2981 20.2981L20.8284 20.8284ZM14 21.25H10V22.75H14V21.25ZM2.75 14V10H1.25V14H2.75ZM21.25 13.5629V14H22.75V13.5629H21.25ZM14.8912 4.61112L18.85 8.17402L19.8534 7.05907L15.8947 3.49618L14.8912 4.61112ZM22.75 13.5629C22.75 11.8745 22.7651 10.8055 22.3391 9.84897L20.9689 10.4592C21.2349 11.0565 21.25 11.742 21.25 13.5629H22.75ZM18.85 8.17402C20.2034 9.3921 20.7029 9.86199 20.9689 10.4592L22.3391 9.84897C21.9131 8.89241 21.1084 8.18853 19.8534 7.05907L18.85 8.17402ZM10.0298 2.75C11.6116 2.75 12.2085 2.76158 12.7405 2.96573L13.2779 1.5653C12.4261 1.23842 11.498 1.25 10.0298 1.25V2.75ZM15.8947 3.49618C14.8087 2.51878 14.1297 1.89214 13.2779 1.5653L12.7405 2.96573C13.2727 3.16993 13.7215 3.55836 14.8912 4.61112L15.8947 3.49618ZM10 21.25C8.09318 21.25 6.73851 21.2484 5.71085 21.1102C4.70476 20.975 4.12511 20.7213 3.7019 20.2981L2.64124 21.3588C3.38961 22.1071 4.33855 22.4392 5.51098 22.5969C6.66182 22.7516 8.13558 22.75 10 22.75V21.25ZM1.25 14C1.25 15.8644 1.24841 17.3382 1.40313 18.489C1.56076 19.6614 1.89288 20.6104 2.64124 21.3588L3.7019 20.2981C3.27869 19.8749 3.02502 19.2952 2.88976 18.2892C2.75159 17.2615 2.75 15.9068 2.75 14H1.25ZM14 22.75C15.8644 22.75 17.3382 22.7516 18.489 22.5969C19.6614 22.4392 20.6104 22.1071 21.3588 21.3588L20.2981 20.2981C19.8749 20.7213 19.2952 20.975 18.2892 21.1102C17.2615 21.2484 15.9068 21.25 14 21.25V22.75ZM21.25 14C21.25 15.9068 21.2484 17.2615 21.1102 18.2892C20.975 19.2952 20.7213 19.8749 20.2981 20.2981L21.3588 21.3588C22.1071 20.6104 22.4392 19.6614 22.5969 18.489C22.7516 17.3382 22.75 15.8644 22.75 14H21.25ZM2.75 10C2.75 8.09318 2.75159 6.73851 2.88976 5.71085C3.02502 4.70476 3.27869 4.12511 3.7019 3.7019L2.64124 2.64124C1.89288 3.38961 1.56076 4.33855 1.40313 5.51098C1.24841 6.66182 1.25 8.13558 1.25 10H2.75ZM10.0298 1.25C8.15538 1.25 6.67442 1.24842 5.51887 1.40307C4.34232 1.56054 3.39019 1.8923 2.64124 2.64124L3.7019 3.7019C4.12453 3.27928 4.70596 3.02525 5.71785 2.88982C6.75075 2.75158 8.11311 2.75 10.0298 2.75V1.25Z"
+                            fill="currentColor"></path>
+                        <path opacity="0.5" d="M6 14.5H14" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round">
+                        </path>
+                        <path opacity="0.5" d="M6 18H11.5" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round">
+                        </path>
+                        <path opacity="0.5"
+                            d="M13 2.5V5C13 7.35702 13 8.53553 13.7322 9.26777C14.4645 10 15.643 10 18 10H22"
+                            stroke="currentColor" stroke-width="1.5"></path>
+                    </svg>
+                    TEXTE
+                </button>
+                <button type="button" class="m-1 btn btn-primary btn-sm" @click="exportTable('excel')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ltr:mr-2 rtl:ml-2">
+                        <path
+                            d="M15.3929 4.05365L14.8912 4.61112L15.3929 4.05365ZM19.3517 7.61654L18.85 8.17402L19.3517 7.61654ZM21.654 10.1541L20.9689 10.4592V10.4592L21.654 10.1541ZM3.17157 20.8284L3.7019 20.2981H3.7019L3.17157 20.8284ZM20.8284 20.8284L20.2981 20.2981L20.2981 20.2981L20.8284 20.8284ZM14 21.25H10V22.75H14V21.25ZM2.75 14V10H1.25V14H2.75ZM21.25 13.5629V14H22.75V13.5629H21.25ZM14.8912 4.61112L18.85 8.17402L19.8534 7.05907L15.8947 3.49618L14.8912 4.61112ZM22.75 13.5629C22.75 11.8745 22.7651 10.8055 22.3391 9.84897L20.9689 10.4592C21.2349 11.0565 21.25 11.742 21.25 13.5629H22.75ZM18.85 8.17402C20.2034 9.3921 20.7029 9.86199 20.9689 10.4592L22.3391 9.84897C21.9131 8.89241 21.1084 8.18853 19.8534 7.05907L18.85 8.17402ZM10.0298 2.75C11.6116 2.75 12.2085 2.76158 12.7405 2.96573L13.2779 1.5653C12.4261 1.23842 11.498 1.25 10.0298 1.25V2.75ZM15.8947 3.49618C14.8087 2.51878 14.1297 1.89214 13.2779 1.5653L12.7405 2.96573C13.2727 3.16993 13.7215 3.55836 14.8912 4.61112L15.8947 3.49618ZM10 21.25C8.09318 21.25 6.73851 21.2484 5.71085 21.1102C4.70476 20.975 4.12511 20.7213 3.7019 20.2981L2.64124 21.3588C3.38961 22.1071 4.33855 22.4392 5.51098 22.5969C6.66182 22.7516 8.13558 22.75 10 22.75V21.25ZM1.25 14C1.25 15.8644 1.24841 17.3382 1.40313 18.489C1.56076 19.6614 1.89288 20.6104 2.64124 21.3588L3.7019 20.2981C3.27869 19.8749 3.02502 19.2952 2.88976 18.2892C2.75159 17.2615 2.75 15.9068 2.75 14H1.25ZM14 22.75C15.8644 22.75 17.3382 22.7516 18.489 22.5969C19.6614 22.4392 20.6104 22.1071 21.3588 21.3588L20.2981 20.2981C19.8749 20.7213 19.2952 20.975 18.2892 21.1102C17.2615 21.2484 15.9068 21.25 14 21.25V22.75ZM21.25 14C21.25 15.9068 21.2484 17.2615 21.1102 18.2892C20.975 19.2952 20.7213 19.8749 20.2981 20.2981L21.3588 21.3588C22.1071 20.6104 22.4392 19.6614 22.5969 18.489C22.7516 17.3382 22.75 15.8644 22.75 14H21.25ZM2.75 10C2.75 8.09318 2.75159 6.73851 2.88976 5.71085C3.02502 4.70476 3.27869 4.12511 3.7019 3.7019L2.64124 2.64124C1.89288 3.38961 1.56076 4.33855 1.40313 5.51098C1.24841 6.66182 1.25 8.13558 1.25 10H2.75ZM10.0298 1.25C8.15538 1.25 6.67442 1.24842 5.51887 1.40307C4.34232 1.56054 3.39019 1.8923 2.64124 2.64124L3.7019 3.7019C4.12453 3.27928 4.70596 3.02525 5.71785 2.88982C6.75075 2.75158 8.11311 2.75 10.0298 2.75V1.25Z"
+                            fill="currentColor"></path>
+                        <path opacity="0.5"
+                            d="M13 2.5V5C13 7.35702 13 8.53553 13.7322 9.26777C14.4645 10 15.643 10 18 10H22"
+                            stroke="currentColor" stroke-width="1.5"></path>
+                        <path opacity="0.5" d="M7 14L6 15L7 16M11.5 16L12.5 17L11.5 18M10 14L8.5 18"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                    </svg>
+                    EXCEL
+                </button>
+                <button type="button" class="m-1 btn btn-primary btn-sm" @click="printTable">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ltr:mr-2 rtl:ml-2">
+                        <path
+                            d="M6 17.9827C4.44655 17.9359 3.51998 17.7626 2.87868 17.1213C2 16.2426 2 14.8284 2 12C2 9.17157 2 7.75736 2.87868 6.87868C3.75736 6 5.17157 6 8 6H16C18.8284 6 20.2426 6 21.1213 6.87868C22 7.75736 22 9.17157 22 12C22 14.8284 22 16.2426 21.1213 17.1213C20.48 17.7626 19.5535 17.9359 18 17.9827"
+                            stroke="currentColor" stroke-width="1.5"></path>
+                        <path opacity="0.5" d="M9 10H6" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round">
+                        </path>
+                        <path d="M19 14L5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        <path
+                            d="M18 14V16C18 18.8284 18 20.2426 17.1213 21.1213C16.2426 22 14.8284 22 12 22C9.17157 22 7.75736 22 6.87868 21.1213C6 20.2426 6 18.8284 6 16V14"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        <path opacity="0.5"
+                            d="M17.9827 6C17.9359 4.44655 17.7626 3.51998 17.1213 2.87868C16.2427 2 14.8284 2 12 2C9.17158 2 7.75737 2 6.87869 2.87868C6.23739 3.51998 6.06414 4.44655 6.01733 6"
+                            stroke="currentColor" stroke-width="1.5"></path>
+                        <circle opacity="0.5" cx="17" cy="10" r="1" fill="currentColor"></circle>
+                        <path opacity="0.5" d="M15 16.5H9" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round">
+                        </path>
+                        <path opacity="0.5" d="M13 19H9" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round">
+                        </path>
+                    </svg>
+                    IMPRIMER
+                </button>
+            </div>
+            <div class="p-0 mt-5 overflow-hidden border-0">
+                <template x-if="displayType === 'list'">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>profil</th>
+                                    <th>Nom et Prénom</th>
+                                    <th>Sexe</th>
+                                    <th>N° de téléphone</th>
+                                    <th>Adresse email</th>
+                                    <th>Service</th>
+                                    <th>Matricule</th>
+                                    <th>Date de naissance</th>
+                                    <th>Lieu de naissance</th>
+                                    <th>Pays</th>
+                                    <th>Ville</th>
+                                    <th>Quartier</th>
+                                    <th>Date d'emboche</th>
+                                    <th>Date de départ</th>
+                                    <th>Motif de départ</th>
+                                    <th>Motif d'absence</th>
+                                    {{-- <th>Date de début d'absence</th>
+                                    <th>Date de fin d'absence</th> --}}
+                                    <th>Rôle</th>
+                                    <th>Statut compte</th>
+                                    <th>Créer par</th>
+                                    <th>Date de creation</th>
+                                    <th class="!text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($users as $user)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <div class="flex items-center w-max">
+                                                <div class="flex-none mr-3">
+                                                    <div class="p-1 rounded-full bg-white-dark/30">
+                                                        @if ($user->profile_picture)
+                                                            <img src="{{ asset('documents/profil/users/' . $user->profile_picture) }}"
+                                                                alt="photo de profile"
+                                                                class="object-cover w-12 h-12 rounded-full">
+                                                        @else
+                                                            Pas d'images
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </td>
+                                        <td>{{ $user->name ?? 'Non défini' }} {{ $user->first_name }}</td>
+                                        <td>{{ $user->gender ?? 'Non défini' }}</td>
+                                        <td>{{ $user->phone ?? 'Non défini' }}</td>
+                                        <td>{{ $user->email ?? 'Non défini' }}</td>
+                                        <td>{{ $user->service->name ?? 'Non défini' }}</td>
+                                        <td>{{ $user->matricule ?? 'Non défini' }}</td>
+                                        <td>{{ $user->birth_date ? \Carbon\Carbon::parse($user->birth_date)->format('d/m/Y') : 'Non défini' }}
+                                        </td>
+                                        <td>{{ $user->birth_place ?? 'Non défini' }}</td>
+                                        <td>{{ $user->country ?? 'Non défini' }}</td>
+                                        <td>{{ $user->city ?? 'Non défini' }}</td>
+                                        <td>{{ $user->neighborhood ?? 'Non défini' }}</td>
+                                        <td>{{ $user->hiring_date ? \Carbon\Carbon::parse($user->hiring_date)->format('d/m/Y') : 'Non défini' }}
+                                        </td>
+                                        <td>{{ $user->departure_date ? \Carbon\Carbon::parse($user->departure_date)->format('d/m/Y') : '' }}
+                                        </td>
+                                        <td>{{ $user->departure->name ?? '' }}</td>
+                                        <td>{{ $user->absence->name ?? '' }}</td>
+                                        {{-- <td>{{ optional($user->absence)->start_date
+                                            ? \Carbon\Carbon::parse($user->absence->start_date)->translatedFormat('d F Y')
+                                            : '' }}
+                                        </td> --}}
+                                        {{-- pour afficher la date au format 08 mars 2025 --}}
+                                        {{-- <td>{{ optional($user->absence)->end_date
+                                            ? \Carbon\Carbon::parse($user->absence->end_date)->translatedFormat('d F Y')
+                                            : '' }}
+                                        </td> --}}
+                                        <td>{{ $user->role ?? 'Non défini' }}</td>
+                                        <td>
+                                            @if ($user->status === 'Actif')
+                                                <span
+                                                    class="px-3 py-1 rounded-full badge bg-success/20 text-success hover:top-0">Actif</span>
+                                            @elseif($user->status === 'Inactif')
+                                                <span
+                                                    class="px-3 py-1 rounded-full badge bg-danger/20 text-danger hover:top-0">Inactif</span>
+                                            @else
+                                                <span class="text-gray-500">Non défini</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $user->addedByUser ? $user->addedByUser->name . ' ' . $user->addedByUser->first_name : 'Non défini' }}
+                                        </td>
+                                        <td>{{ $user->created_at ? \Carbon\Carbon::parse($user->created_at)->format('d/m/Y') : 'Non défini' }}
+                                        </td>
+                                        <td class="text-center">
+                                            <ul class="flex items-center justify-center gap-2">
+                                                <div x-data="{ open: false, selectedType: '' }">
+                                                    <!-- Bouton Modifier avec modale -->
+                                                    <li>
+                                                        <a href="{{ route('admin.users.update', ['id' => $user->id]) }}"
+                                                            x-tooltip="Modifier">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                                class="h-4.5 w-4.5 text-success">
+                                                                <path
+                                                                    d="M15.2869 3.15178L14.3601 4.07866L5.83882 12.5999L5.83881 12.5999C5.26166 13.1771 4.97308 13.4656 4.7249 13.7838C4.43213 14.1592 4.18114 14.5653 3.97634 14.995C3.80273 15.3593 3.67368 15.7465 3.41556 16.5208L2.32181 19.8021L2.05445 20.6042C1.92743 20.9852 2.0266 21.4053 2.31063 21.6894C2.59466 21.9734 3.01478 22.0726 3.39584 21.9456L4.19792 21.6782L7.47918 20.5844L7.47919 20.5844C8.25353 20.3263 8.6407 20.1973 9.00498 20.0237C9.43469 19.8189 9.84082 19.5679 10.2162 19.2751C10.5344 19.0269 10.8229 18.7383 11.4001 18.1612L11.4001 18.1612L19.9213 9.63993L20.8482 8.71306C22.3839 7.17735 22.3839 4.68748 20.8482 3.15178C19.3125 1.61607 16.8226 1.61607 15.2869 3.15178Z"
+                                                                    stroke="currentColor" stroke-width="1.5"></path>
+                                                                <path opacity="0.5"
+                                                                    d="M14.36 4.07812C14.36 4.07812 14.4759 6.04774 16.2138 7.78564C17.9517 9.52354 19.9213 9.6394 19.9213 9.6394M4.19789 21.6777L2.32178 19.8015"
+                                                                    stroke="currentColor" stroke-width="1.5"></path>
+                                                            </svg>
+                                                        </a>
+                                                    </li>
+                                                </div>
+                                                <div>
+                                                    <li>
+                                                        <a onclick="confirmation(event)"
+                                                            href="{{ route('admin.users.delete', $user->id) }}"
+                                                            x-tooltip="Supprimer">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                                class="w-5 h-5 text-danger">
+                                                                <path d="M20.5001 6H3.5" stroke="currentColor"
+                                                                    stroke-width="1.5" stroke-linecap="round"></path>
+                                                                <path
+                                                                    d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5"
+                                                                    stroke="currentColor" stroke-width="1.5"
+                                                                    stroke-linecap="round"></path>
+                                                                <path opacity="0.5" d="M9.5 11L10 16"
+                                                                    stroke="currentColor" stroke-width="1.5"
+                                                                    stroke-linecap="round"></path>
+                                                                <path opacity="0.5" d="M14.5 11L14 16"
+                                                                    stroke="currentColor" stroke-width="1.5"
+                                                                    stroke-linecap="round"></path>
+                                                                <path opacity="0.5"
+                                                                    d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
+                                                                    stroke="currentColor" stroke-width="1.5"></path>
+                                                            </svg>
+                                                        </a>
+                                                    </li>
+                                                </div>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr class="text-center">
+                                        <td colspan="3">Pas de personnels</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+            </div>
+            {{-- deuxième type d'affichage --}}
+            <template x-if="displayType === 'grid'">
+                <div class="grid w-full grid-cols-1 gap-6 my-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                    @forelse($users as $user)
+                        <div class="relative overflow-hidden rounded-md bg-white text-center shadow dark:bg-[#1c232f]">
+                            <div
+                                class="rounded-t-md bg-white/40 bg-[url('../images/notification-bg.png')] bg-cover bg-center p-6 pb-0">
+                                <template>
+                                    <img class="object-contain w-4/5 mx-auto max-h-40"
+                                        src="assets/images/user-profile.jpeg">
+                                </template>
+                            </div>
+                            <div class="relative px-6 pb-24 -mt-10">
+                                <div class="px-2 py-4 bg-white rounded-md shadow-md dark:bg-gray-900">
+                                    <div class="flex flex-wrap items-center gap-3 mt-2">
+                                        <div class="flex-auto">
+                                            {{-- <img class="object-cover w-20 h-20 rounded-full"
+                                        src="{{asset('template/assets/images/user-profile.jpeg')}}"> --}}
+                                        </div>
+                                        <div class="flex-center">
+                                            @if ($user->profile_picture)
+                                                <img src="{{ asset('documents/profil/users/' . $user->profile_picture) }}"
+                                                    alt="photo de profile" class="object-cover w-20 h-20">
+                                            @else
+                                                Pas d'images
+                                            @endif
+                                        </div>
+                                        <div class="flex-auto">
+                                            {{-- <img class="object-cover w-20 h-20 rounded-full"
+                                        src="{{asset('template/assets/images/user-profile.jpeg')}}"> --}}
                                         </div>
                                     </div>
-                                </td>
-                                <td>{{ $user->name ?? 'Non défini'}} {{ $user->first_name }}</td>
-                                <td>{{ $user->gender ?? 'Non défini'}}</td>
-                                <td>{{ $user->phone ?? 'Non défini' }}</td>
-                                <td>{{ $user->email ?? 'Non défini' }}</td>
-                                <td>{{ $user->service->name ?? 'Non défini' }}</td>
-                                <td>{{ $user->matricule ?? 'Non défini' }}</td>
-                                <td>{{ $user->birth_date ? \Carbon\Carbon::parse($user->birth_date)->format('d/m/Y') :
-                                    'Non défini' }}</td>
-                                <td>{{ $user->birth_place ?? 'Non défini' }}</td>
-                                <td>{{ $user->country ?? 'Non défini' }}</td>
-                                <td>{{ $user->city ?? 'Non défini' }}</td>
-                                <td>{{ $user->neighborhood ?? 'Non défini' }}</td>
-                                <td>{{ $user->hiring_date ? \Carbon\Carbon::parse($user->hiring_date)->format('d/m/Y') :
-                                    'Non défini' }}</td>
-                                <td>{{ $user->departure_date ?
-                                    \Carbon\Carbon::parse($user->departure_date)->format('d/m/Y') : '' }}</td>
-                                <td>{{ $user->departure->name ?? '' }}</td>
-                                <td>{{ $user->absence->name ?? '' }}</td>
-                                <td>{{ optional($user->absence)->start_date ?
-                                    \Carbon\Carbon::parse($user->absence->start_date)->translatedFormat('d F Y') : '' }}
-                                </td>
-                                {{-- pour afficher la date au format 08 mars 2025 --}}
-                                <td>{{ optional($user->absence)->end_date ?
-                                    \Carbon\Carbon::parse($user->absence->end_date)->translatedFormat('d F Y') : '' }}
-                                </td>
-                                <td>{{ $user->role ?? 'Non défini' }}</td>
-                                <td>
-                                    @if($user->status === 'Actif')
-                                    <span
-                                        class="px-3 py-1 rounded-full badge bg-success/20 text-success hover:top-0">Actif</span>
-                                    @elseif($user->status === 'Inactif')
-                                    <span
-                                        class="px-3 py-1 rounded-full badge bg-danger/20 text-danger hover:top-0">Inactif</span>
-                                    @else
-                                    <span class="text-gray-500">Non défini</span>
-                                    @endif
-                                </td>
-                                <td>{{ $user->addedByUser ? $user->addedByUser->name . ' ' .
-                                    $user->addedByUser->first_name : 'Non défini' }}</td>
-                                <td>{{ $user->created_at ? \Carbon\Carbon::parse($user->created_at)->format('d/m/Y') :
-                                    'Non défini' }}</td>
-                                <td class="text-center">
-                                    <ul class="flex items-center justify-center gap-2">
-                                        <div x-data="{ open: false, selectedType: '' }">
-                                            <!-- Bouton Modifier avec modale -->
-                                            <li>
-                                                <a href="{{ route('admin.users.update',['id'=> $user->id]) }}"
-                                                    x-tooltip="Modifier">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        class="h-4.5 w-4.5 text-success">
-                                                        <path
-                                                            d="M15.2869 3.15178L14.3601 4.07866L5.83882 12.5999L5.83881 12.5999C5.26166 13.1771 4.97308 13.4656 4.7249 13.7838C4.43213 14.1592 4.18114 14.5653 3.97634 14.995C3.80273 15.3593 3.67368 15.7465 3.41556 16.5208L2.32181 19.8021L2.05445 20.6042C1.92743 20.9852 2.0266 21.4053 2.31063 21.6894C2.59466 21.9734 3.01478 22.0726 3.39584 21.9456L4.19792 21.6782L7.47918 20.5844L7.47919 20.5844C8.25353 20.3263 8.6407 20.1973 9.00498 20.0237C9.43469 19.8189 9.84082 19.5679 10.2162 19.2751C10.5344 19.0269 10.8229 18.7383 11.4001 18.1612L11.4001 18.1612L19.9213 9.63993L20.8482 8.71306C22.3839 7.17735 22.3839 4.68748 20.8482 3.15178C19.3125 1.61607 16.8226 1.61607 15.2869 3.15178Z"
-                                                            stroke="currentColor" stroke-width="1.5"></path>
-                                                        <path opacity="0.5"
-                                                            d="M14.36 4.07812C14.36 4.07812 14.4759 6.04774 16.2138 7.78564C17.9517 9.52354 19.9213 9.6394 19.9213 9.6394M4.19789 21.6777L2.32178 19.8015"
-                                                            stroke="currentColor" stroke-width="1.5"></path>
-                                                    </svg>
-                                                </a>
-                                            </li>
-                                        </div>
-                                        <div>
-                                            <li>
-                                                <a onclick="confirmation(event)"
-                                                    href="{{ route('admin.users.delete', $user->id) }}"
-                                                    x-tooltip="Supprimer">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-danger">
-                                                        <path d="M20.5001 6H3.5" stroke="currentColor"
-                                                            stroke-width="1.5" stroke-linecap="round"></path>
-                                                        <path
-                                                            d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5"
-                                                            stroke="currentColor" stroke-width="1.5"
-                                                            stroke-linecap="round"></path>
-                                                        <path opacity="0.5" d="M9.5 11L10 16" stroke="currentColor"
-                                                            stroke-width="1.5" stroke-linecap="round"></path>
-                                                        <path opacity="0.5" d="M14.5 11L14 16" stroke="currentColor"
-                                                            stroke-width="1.5" stroke-linecap="round"></path>
-                                                        <path opacity="0.5"
-                                                            d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
-                                                            stroke="currentColor" stroke-width="1.5"></path>
-                                                    </svg>
-                                                </a>
-                                            </li>
-                                        </div>
-                                    </ul>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr class="text-center">
-                                <td colspan="3">Pas de personnels</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </template>
-        </div>
-        {{-- deuxième type d'affichage --}}
-        <template x-if="displayType === 'grid'">
-            <div class="grid w-full grid-cols-1 gap-6 my-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                @forelse($users as $user)
-                <div class="relative overflow-hidden rounded-md bg-white text-center shadow dark:bg-[#1c232f]">
-                    <div
-                        class="rounded-t-md bg-white/40 bg-[url('../images/notification-bg.png')] bg-cover bg-center p-6 pb-0">
-                        <template>
-                            <img class="object-contain w-4/5 mx-auto max-h-40" src="assets/images/user-profile.jpeg">
-                        </template>
-                    </div>
-                    <div class="relative px-6 pb-24 -mt-10">
-                        <div class="px-2 py-4 bg-white rounded-md shadow-md dark:bg-gray-900">
-                            <div class="flex flex-wrap items-center gap-3 mt-2">
-                                <div class="flex-auto">
-                                    {{-- <img class="object-cover w-20 h-20 rounded-full"
-                                        src="{{asset('template/assets/images/user-profile.jpeg')}}"> --}}
+                                    <div class="text-xl">{{ $user->name ?? 'Non défini' }} {{ $user->first_name }}</div>
                                 </div>
-                                <div class="flex-center">
-                                    @if ($user->profile_picture)
-                                    <img src="{{ asset('documents/profil/users/' . $user->profile_picture)}}"
-                                        alt="photo de profile" class="object-cover w-20 h-20">
-                                    @else
-                                    Pas d'images
-                                    @endif
-                                </div>
-                                <div class="flex-auto">
-                                    {{-- <img class="object-cover w-20 h-20 rounded-full"
-                                        src="{{asset('template/assets/images/user-profile.jpeg')}}"> --}}
+                                <div class="grid grid-cols-1 gap-4 mt-3 ltr:text-left rtl:text-right">
+                                    <div class="flex items-center">
+                                        <div class="flex-none ltr:mr-2 rtl:ml-2">Adresse Email :</div>
+                                        <div class="truncate text-white-dark">{{ $user->email ?? 'Non défini' }}</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="flex-none ltr:mr-2 rtl:ml-2">Matricule :</div>
+                                        <div class="truncate text-white-dark">{{ $user->matricule ?? 'Non défini' }}</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="flex-none ltr:mr-2 rtl:ml-2">N° de Téléphone :</div>
+                                        <div class="text-white-dark">{{ $user->phone ?? 'Non défini' }}</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="flex-none ltr:mr-2 rtl:ml-2">Adresse de Résidence :</div>
+                                        <div class="text-white-dark">{{ $user->address ?? 'Non défini' }}</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="flex-none ltr:mr-2 rtl:ml-2">Créer Par :</div>
+                                        <div class="text-white-dark">{{ $user->addedByUser->name ?? 'Non défini' }}</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="flex-none ltr:mr-2 rtl:ml-2">Date de Création :</div>
+                                        <div class="text-white-dark">{{ $user->created_at ?? 'Non défini' }}</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="text-xl">{{ $user->name ?? 'Non défini'}} {{ $user->first_name }}</div>
-                        </div>
-                        <div class="grid grid-cols-1 gap-4 mt-3 ltr:text-left rtl:text-right">
-                            <div class="flex items-center">
-                                <div class="flex-none ltr:mr-2 rtl:ml-2">Adresse Email :</div>
-                                <div class="truncate text-white-dark">{{ $user->email ?? 'Non défini' }}</div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="flex-none ltr:mr-2 rtl:ml-2">Matricule :</div>
-                                <div class="truncate text-white-dark">{{ $user->matricule ?? 'Non défini' }}</div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="flex-none ltr:mr-2 rtl:ml-2">N° de Téléphone :</div>
-                                <div class="text-white-dark">{{ $user->phone ?? 'Non défini' }}</div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="flex-none ltr:mr-2 rtl:ml-2">Adresse de Résidence :</div>
-                                <div class="text-white-dark">{{ $user->address ?? 'Non défini' }}</div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="flex-none ltr:mr-2 rtl:ml-2">Créer Par :</div>
-                                <div class="text-white-dark">{{ $user->addedByUser->name ?? 'Non défini' }}</div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="flex-none ltr:mr-2 rtl:ml-2">Date de Création :</div>
-                                <div class="text-white-dark">{{ $user->created_at ?? 'Non défini' }}</div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="absolute bottom-0 flex w-full gap-4 p-6 mt-2 ltr:left-0 rtl:right-0">
-                        <a href="{{ route('admin.users.update',['id'=> $user->id]) }}"
-                            class="w-1/2 btn btn-outline-primary">Modifier</a>
-                        {{-- <button type="button" class="w-1/2 btn btn-outline-primary">Edit</button> --}}
-                        {{-- <a onclick="confirmation(event)" href="{{ route('admin.users.delete', $user->id) }}"
+                            <div class="absolute bottom-0 flex w-full gap-4 p-6 mt-2 ltr:left-0 rtl:right-0">
+                                <a href="{{ route('admin.users.update', ['id' => $user->id]) }}"
+                                    class="w-1/2 btn btn-outline-primary">Modifier</a>
+                                {{-- <button type="button" class="w-1/2 btn btn-outline-primary">Edit</button> --}}
+                                {{-- <a onclick="confirmation(event)" href="{{ route('admin.users.delete', $user->id) }}"
                             class="w-1/2 btn btn-outline-danger">
                             Supprimer
                         </a> --}}
-                        <a onclick="confirmation(event)" href="{{ route('admin.users.delete', $user->id) }}"
-                            class="w-1/2 btn btn-outline-danger">
-                            Supprimer
-                        </a>
+                                <a onclick="confirmation(event)" href="{{ route('admin.users.delete', $user->id) }}"
+                                    class="w-1/2 btn btn-outline-danger">
+                                    Supprimer
+                                </a>
 
 
-                        {{-- <button type="button" class="w-1/2 btn btn-outline-danger">Delete</button> --}}
-                    </div>
+                                {{-- <button type="button" class="w-1/2 btn btn-outline-danger">Delete</button> --}}
+                            </div>
+                        </div>
+                    @empty
+                        <diiv class="text-center">
+                            <h1 colspan="3">Pas de personnels</h1>
+                        </diiv>
+                    @endforelse
                 </div>
-                @empty
-                <diiv class="text-center">
-                    <h1 colspan="3">Pas de personnels</h1>
-                </diiv>
-                @endforelse
-            </div>
-        </template>
+            </template>
+        </div>
+        <!-- end main content section -->
+
     </div>
-    <!-- end main content section -->
 
-</div>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            // main section
+            Alpine.data('scrollToTop', () => ({
+                showTopButton: false,
+                init() {
+                    window.onscroll = () => {
+                        this.scrollFunction();
+                    };
+                },
 
-<script>
-    document.addEventListener('alpine:init', () => {
-        // main section
-        Alpine.data('scrollToTop', () => ({
-            showTopButton: false,
-            init() {
-                window.onscroll = () => {
-                    this.scrollFunction();
-                };
-            },
-
-            scrollFunction() {
-                if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-                    this.showTopButton = true;
-                } else {
-                    this.showTopButton = false;
-                }
-            },
-
-            goToTop() {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            },
-        }));
-        //contacts
-
-        Alpine.data('contacts', () => ({
-
-            displayType: 'list',
-
-            setDisplayType(type) {
-                this.displayType = type;
-            },
-
-        }));
-    });
-</script>
-
-<script>
-    // function confirmation(ev) {
-    //     ev.preventDefault();
-    //     var urlToRedirect = ev.currentTarget.getAttribute('href');
-    //     console.log(urlToRedirect);
-
-    //     Swal.fire({
-    //         title: "Êtes-vous sûr ?",
-    //         text: "Cette action est irréversible !",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#d33",
-    //         cancelButtonColor: "#3085d6",
-    //         confirmButtonText: "Oui, supprimer !",
-    //         cancelButtonText: "Annuler"
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             // Envoie de la requête DELETE avec CSRF token
-    //             fetch(urlToRedirect, {
-    //                 method: 'DELETE',
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Récupérer le token CSRF
-    //                 }
-    //             })
-    //             .then(response => {
-    //                 if (response.ok) {
-    //                     Swal.fire('Supprimé !', 'Le personnel a été supprimé.', 'success');
-    //                     window.location.reload();  // Recharger la page après la suppression
-    //                 } else {
-    //                     Swal.fire('Erreur', 'Il y a eu un problème lors de la suppression.', 'error');
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 Swal.fire('Erreur', 'Il y a eu un problème avec la demande.', 'error');
-    //             });
-    //         }
-    //     });
-    // }
-    function confirmation(ev) {
-       ev.preventDefault();
-       var urlToRedirect = ev.currentTarget.getAttribute('href');
-       console.log(urlToRedirect);
-
-       Swal.fire({
-           title: "Êtes-vous sûr ?",
-           text: "Cette action est irréversible !",
-           icon: "warning",
-           showCancelButton: true,
-           confirmButtonColor: "#d33",
-           cancelButtonColor: "#3085d6",
-           confirmButtonText: "Oui, supprimer !",
-           cancelButtonText: "Annuler"
-       }).then((result) => {
-           // Vérifier si l'utilisateur a confirmé la suppression
-           if (result.isConfirmed) {
-               window.location.href = urlToRedirect;
-           }
-   });
-}
-</script>
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-<script>
-    document.addEventListener('alpine:init', () => {
-       Alpine.data('exportTable', () => ({
-       datatable: null,
-
-        initTable() {
-            setTimeout(() => {  // Ajout d'un léger délai pour s'assurer que la table est bien chargée
-                let table = document.querySelector("#myTable");
-                if (!table) {
-                    console.error("Table non trouvée !");
-                    return;
-                }
-
-                this.datatable = new simpleDatatables.DataTable(table, {
-                    labels: {
-                        placeholder: "Rechercher...",
-                        perPage: "Afficher {select} entrées par page",
-                        noRows: "Aucune donnée trouvée",
-                        info: "Affichage de {start} à {end} sur {rows} entrées",
-                        noResults: "Aucun résultat pour votre recherche",
-                        next: "Suivant",
-                        prev: "Précédent",
+                scrollFunction() {
+                    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                        this.showTopButton = true;
+                    } else {
+                        this.showTopButton = false;
                     }
-                });
-            }, 500);  // 500ms de délai pour laisser le DOM se charger
-        },
-        exportTable(eType) {
-            if (!this.datatable) {
-                console.error("DataTable non initialisé !");
-                return;
-            }
+                },
 
-            if (eType === 'excel') {
-                let table = document.querySelector("#myTable");
-                if (!table) {
-                    console.error("Table non trouvée pour export !");
-                    return;
+                goToTop() {
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
+                },
+            }));
+            //contacts
+
+            Alpine.data('contacts', () => ({
+
+                displayType: 'list',
+
+                setDisplayType(type) {
+                    this.displayType = type;
+                },
+
+            }));
+        });
+    </script>
+
+    <script>
+        // function confirmation(ev) {
+        //     ev.preventDefault();
+        //     var urlToRedirect = ev.currentTarget.getAttribute('href');
+        //     console.log(urlToRedirect);
+
+        //     Swal.fire({
+        //         title: "Êtes-vous sûr ?",
+        //         text: "Cette action est irréversible !",
+        //         icon: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonColor: "#d33",
+        //         cancelButtonColor: "#3085d6",
+        //         confirmButtonText: "Oui, supprimer !",
+        //         cancelButtonText: "Annuler"
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             // Envoie de la requête DELETE avec CSRF token
+        //             fetch(urlToRedirect, {
+        //                 method: 'DELETE',
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Récupérer le token CSRF
+        //                 }
+        //             })
+        //             .then(response => {
+        //                 if (response.ok) {
+        //                     Swal.fire('Supprimé !', 'Le personnel a été supprimé.', 'success');
+        //                     window.location.reload();  // Recharger la page après la suppression
+        //                 } else {
+        //                     Swal.fire('Erreur', 'Il y a eu un problème lors de la suppression.', 'error');
+        //                 }
+        //             })
+        //             .catch(error => {
+        //                 Swal.fire('Erreur', 'Il y a eu un problème avec la demande.', 'error');
+        //             });
+        //         }
+        //     });
+        // }
+        function confirmation(ev) {
+            ev.preventDefault();
+            var urlToRedirect = ev.currentTarget.getAttribute('href');
+            console.log(urlToRedirect);
+
+            Swal.fire({
+                title: "Êtes-vous sûr ?",
+                text: "Cette action est irréversible !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Oui, supprimer !",
+                cancelButtonText: "Annuler"
+            }).then((result) => {
+                // Vérifier si l'utilisateur a confirmé la suppression
+                if (result.isConfirmed) {
+                    window.location.href = urlToRedirect;
                 }
-                let wb = XLSX.utils.table_to_book(table, { sheet: "Données" });
-                XLSX.writeFile(wb, "table.xlsx");
-                return;
-            }
+            });
+        }
+    </script>
 
-            this.datatable.export({ type: eType, filename: 'table', download: true });
-        },
-        printTable() {
-            if (!this.datatable) {
-                console.error("DataTable non initialisé !");
-                return;
-            }
 
-            // console.log("Impression du tableau...");
-            this.datatable.print();
-        },
-   }));
-});
-</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('exportTable', () => ({
+                datatable: null,
+
+                initTable() {
+                    setTimeout(() => { // Ajout d'un léger délai pour s'assurer que la table est bien chargée
+                        let table = document.querySelector("#myTable");
+                        if (!table) {
+                            console.error("Table non trouvée !");
+                            return;
+                        }
+
+                        this.datatable = new simpleDatatables.DataTable(table, {
+                            labels: {
+                                placeholder: "Rechercher...",
+                                perPage: "Afficher {select} entrées par page",
+                                noRows: "Aucune donnée trouvée",
+                                info: "Affichage de {start} à {end} sur {rows} entrées",
+                                noResults: "Aucun résultat pour votre recherche",
+                                next: "Suivant",
+                                prev: "Précédent",
+                            }
+                        });
+                    }, 500); // 500ms de délai pour laisser le DOM se charger
+                },
+                exportTable(eType) {
+                    if (!this.datatable) {
+                        console.error("DataTable non initialisé !");
+                        return;
+                    }
+
+                    if (eType === 'excel') {
+                        let table = document.querySelector("#myTable");
+                        if (!table) {
+                            console.error("Table non trouvée pour export !");
+                            return;
+                        }
+                        let wb = XLSX.utils.table_to_book(table, {
+                            sheet: "Données"
+                        });
+                        XLSX.writeFile(wb, "table.xlsx");
+                        return;
+                    }
+
+                    this.datatable.export({
+                        type: eType,
+                        filename: 'table',
+                        download: true
+                    });
+                },
+                printTable() {
+                    if (!this.datatable) {
+                        console.error("DataTable non initialisé !");
+                        return;
+                    }
+
+                    // console.log("Impression du tableau...");
+                    this.datatable.print();
+                },
+            }));
+        });
+    </script>
 @endsection
