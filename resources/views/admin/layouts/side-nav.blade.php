@@ -236,9 +236,6 @@
                                 </li>
                             </ul>
                         </li>
-                        {{-- <li>
-                            <a href="{{url('planning/list')}}">List planning</a>
-                        </li> --}}
                     </ul>
                 </li>
                 {{-- end personnel --}}
@@ -312,9 +309,6 @@
                                 </li>
                             </ul>
                         </li>
-                        {{-- <li>
-                            <a href="{{url('planning/list')}}">List planning</a>
-                        </li> --}}
                     </ul>
                 </li>
                 {{-- end planning --}}

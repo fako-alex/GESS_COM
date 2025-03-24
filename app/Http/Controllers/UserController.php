@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absence;
 use App\Models\ReasonForDeparture;
 use App\Models\Service;
 use App\Models\User;
@@ -18,7 +19,8 @@ class UserController extends Controller
 
         $services = Service::all();
         $departures = ReasonForDeparture::all();
-        return view('admin.users.create', compact('services','departures'));
+        $absences = Absence::all();
+        return view('admin.users.create', compact('services','departures','absences'));
     }
 
     public function save(Request $request) {
@@ -38,6 +40,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email', //Adresse email
             'service_id' => 'required|exists:services,id', //Service
             'departure_id' => 'nullable|exists:reason_for_departures,id', //Motif de départ
+            // 'absence_id' => 'nullable|exists:absences,id', //absence
             'matricule' => 'required|regex:/^[A-Z0-9]+$/|max:20', //Matricule
             'birth_date' => 'nullable|date', //Date de naissance
             'birth_place' => 'nullable|max:100', //Lieu de naissance
@@ -120,9 +123,10 @@ class UserController extends Controller
         // dd($request->all());
         $user = User::findOrFail($id);
         $services = Service::all();
+        $absences = Absence::all();
         $departures = ReasonForDeparture::all();
 
-        return view('admin.users.update',compact('user', 'services', 'departures'));
+        return view('admin.users.update',compact('user', 'services', 'departures', 'absences'));
     }
 
     public function update_users(Request $request, $id)
@@ -140,6 +144,7 @@ class UserController extends Controller
                 'email' => 'required|email|unique:users,email,' . $id,
                 'service' => 'required|exists:services,id', //Service
                 'departure_id' => 'nullable|exists:services,id', //Depart
+                'absence_id' => 'nullable|exists:absences,id', //absence
                 'matricule' => 'required|regex:/^[A-Z0-9]+$/|max:20',
                 'birth_date' => 'nullable|date',
                 'birth_place' => 'nullable|max:100',
@@ -148,6 +153,8 @@ class UserController extends Controller
                 'neighborhood' => 'required|max:100',
                 'hiring_date' => 'nullable|date',
                 'departure_date' => 'nullable|date',
+                // 'start_date' => 'nullable|date',
+                // 'end_date' => 'nullable|date',
                 'role' => 'required|in:Personnel,Admin',
                 'password' => 'nullable|min:8',
                 'status' => 'required|in:Actif,Inactif',
@@ -191,14 +198,14 @@ class UserController extends Controller
                 $validatedData['profile_picture'] = $profile_picture_name;
             }
 
-            // $validatedData['service_id'] = $validatedData['service']; // Assigner l'id du service à service_id
-            // unset($validatedData['service']); // Supprimer la clé service du tableau de données
-            // $validatedData['departure_id'] = $validatedData['departure']; // Assigner l'id du departure à departure_id
-            // unset($validatedData['departure']); // Supprimer la clé departure du tableau de données
-
             if (isset($validatedData['service'])) {
                 $validatedData['service_id'] = $validatedData['service'];
                 unset($validatedData['service']);
+            }
+
+            if (isset($validatedData['absence'])) {
+                $validatedData['absence_id'] = $validatedData['absence'];
+                unset($validatedData['absence']);
             }
 
             if (isset($validatedData['departure'])) {

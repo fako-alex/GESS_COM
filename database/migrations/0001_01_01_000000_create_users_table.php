@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('profile_picture')->nullable();  // Photo de profil
             $table->foreignId('added_by')->nullable()->constrained('users');  // personnel ayant ajouté ce profil (clé étrangère)
             $table->string('password')->nullable();  // Mot de passe
+            $table->foreignId('absence_id')->constrained()->onDelete('cascade');
             $table->rememberToken();  // Token de session
             $table->timestamps();  // Date de création et mise à jour
         });
