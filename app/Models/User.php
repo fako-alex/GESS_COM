@@ -25,6 +25,7 @@ class User extends Authenticatable
         'phone',
         'email',
         'service_id',
+        'absence_id',
         'departure_id',
         'matricule',
         'birth_date',
@@ -50,6 +51,10 @@ class User extends Authenticatable
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+    public function absence()
+    {
+        return $this->belongsTo(Absence::class);
     }
     public function departure()
     {
