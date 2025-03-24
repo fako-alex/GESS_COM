@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('absences', function (Blueprint $table) {
             $table->id();
-            $table->string('name');  // Raison d'absence du personnel
+            $table->string('name');  // Motif d'absence du personnel
             $table->date('start_date');  // Date de l'absence du personnel
             $table->date('end_date');  // Date de fin de l'absence du personnel
             $table->string('detail');

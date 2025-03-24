@@ -18,7 +18,7 @@ class AbsenceController extends Controller
         $userId = Auth::id(); // Récupération simplifiée de l'ID de l'utilisateur authentifié
 
         $validatedData = $request->validate([
-            'name' => 'required|max:100',  // Raison d'absence du personnel
+            'name' => 'required|max:100',  // Motif d'absence du personnel
             'start_date' => 'required|date', // Date de début
             'end_date' => 'required|date|after:start_date', // Date de fin
             'detail' => 'nullable|max:150', // Détail
