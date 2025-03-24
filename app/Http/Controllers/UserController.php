@@ -40,7 +40,6 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email', //Adresse email
             'service_id' => 'required|exists:services,id', //Service
             'departure_id' => 'nullable|exists:reason_for_departures,id', //Motif de départ
-            // 'absence_id' => 'nullable|exists:absences,id', //absence
             'matricule' => 'required|regex:/^[A-Z0-9]+$/|max:20', //Matricule
             'birth_date' => 'nullable|date', //Date de naissance
             'birth_place' => 'nullable|max:100', //Lieu de naissance
@@ -59,12 +58,15 @@ class UserController extends Controller
             'email.unique' => 'Cette adresse email est déjà utilisée.',
             'phone.regex' => 'Le numéro de téléphone doit être au format +(241) 77-22-71-07.',
             'role.required' => 'Le rôle est obligatoire.',
-            'service_id.required' => 'Le service est obligatoire.',
+            'service.required' => 'Le service est obligatoire.',
             'matricule.required' => 'Le matricule est obligatoire.',
             'matricule.regex' => 'Le matricule doit être au format QQAAABBVVCC12345ZDZ456',
             'role.in' => 'Le rôle sélectionné est invalide.',
+            'country.required' => 'Le pays est obligatoire.',
+            'city.required' => 'La ville est obligatoire.',
+            'neighborhood.required' => 'Le quartier est obligatoire.',
+            'status.required' => 'Le statut est obligatoire.',
         ]);
-        // dd($validatedData);
 
         // Crypter le mot de passe
         $validatedData['password'] = bcrypt($validatedData['password']);
@@ -140,11 +142,10 @@ class UserController extends Controller
                 'first_name' => 'required|max:100',
                 'gender' => 'nullable|in:Feminin,Masculin',
                 'phone' => 'nullable|max:20',
-                // 'email' => 'required|email|unique:users,email',
                 'email' => 'required|email|unique:users,email,' . $id,
                 'service' => 'required|exists:services,id', //Service
                 'departure_id' => 'nullable|exists:services,id', //Depart
-                'absence_id' => 'nullable|exists:absences,id', //absence
+                'absence_id' => 'nullable|exists:absences,id', //Absence
                 'matricule' => 'required|regex:/^[A-Z0-9]+$/|max:20',
                 'birth_date' => 'nullable|date',
                 'birth_place' => 'nullable|max:100',
@@ -153,8 +154,6 @@ class UserController extends Controller
                 'neighborhood' => 'required|max:100',
                 'hiring_date' => 'nullable|date',
                 'departure_date' => 'nullable|date',
-                // 'start_date' => 'nullable|date',
-                // 'end_date' => 'nullable|date',
                 'role' => 'required|in:Personnel,Admin',
                 'password' => 'nullable|min:8',
                 'status' => 'required|in:Actif,Inactif',
@@ -169,10 +168,14 @@ class UserController extends Controller
                 'matricule.required' => 'Le matricule est obligatoire.',
                 'matricule.regex' => 'Le matricule doit être au format QQAAABBVVCC12345ZDZ456',
                 'role.in' => 'Le rôle sélectionné est invalide.',
+                'country.required' => 'Le pays est obligatoire.',
+                'city.required' => 'La ville est obligatoire.',
+                'neighborhood.required' => 'Le quartier est obligatoire.',
+                'status.required' => 'Le statut est obligatoire.',
 
                 ]
             );
-
+            //dd($request->all());
             if ($request->filled('password')) {
                 $validatedData['password'] = bcrypt($request->password); // Hasher le mot de passe
             } else {
@@ -325,11 +328,23 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    // public function getUsersByService($serviceId)
+    // {
+    //     $users = \App\Models\User::where('service_id', $serviceId)->get();
+    //     return response()->json($users);
+    // }
     public function getUsersByService($serviceId)
     {
-        $users = \App\Models\User::where('service_id', $serviceId)->get();
+        $users = User::where('service_id', $serviceId)
+            ->where('status', 'Actif')
+            ->whereNull('departure_date')
+            ->whereNull('departure_id')
+            ->whereNull('absence_id')
+            ->get();
+
         return response()->json($users);
     }
+
 
 
 }
