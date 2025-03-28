@@ -43,7 +43,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::post('services/create',[ServiceController::class, 'save'])->name('admin.services.save');
     Route::get('services/list',[ServiceController::class, 'list'])->name('admin.services.list');
     Route::get('services/delete/{id}', [ServiceController::class, 'delete_services'])->name('admin.services.delete');
-
     Route::get('services/update/{id}',[ServiceController::class, 'edit_services'])->name('admin.services.update');
     Route::put('services/update/{id}', [ServiceController::class, 'update_services'])->name('admin.services.update.submit');
     // Fin des services
@@ -66,32 +65,25 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::put('absences/update/{id}', [AbsenceController::class, 'update_absences'])->name('admin.absences.update.submit');
     // Fin de gestion des absences d'un membre du personnel
 
-
-
-
-
-
-
-
-
-
-
-
     // Gestion des planings de travail
     Route::get('/planning/create',[PlanningController::class, 'create'])->name('admin.planning.create');
-    Route::get('/admin/users/search', [UserController::class, 'search'])->name('admin.users.search');
-    Route::get('/admin/services/search', [ServiceController::class, 'searchServices'])->name('admin.services.search');
     Route::post('planning/create',[PlanningController::class, 'save'])->name('admin.planning.save');
     Route::get('planning/list',[PlanningController::class, 'list'])->name('admin.planning.list');
-    Route::get('/get-users/{serviceId}', [UserController::class, 'getUsersByService']);
     Route::get('planning/delete/{id}', [PlanningController::class, 'delete_planning'])->name('admin.planning.delete');
-
-
     Route::get('planning/update/{id}',[PlanningController::class, 'edit_planning'])->name('admin.planning.update');
-
-
     Route::put('planning/update/{id}', [PlanningController::class, 'update_planning'])->name('admin.planning.update.submit');
     // Fin des planings de travail
+
+
+
+
+
+
+
+
+
+
+
 
 });
 

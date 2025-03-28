@@ -19,8 +19,6 @@ class AbsenceController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|max:100',  // Motif d'absence du personnel
-            'start_date' => 'required|date', // Date de début
-            'end_date' => 'required|date|after:start_date', // Date de fin
             'detail' => 'nullable|max:150', // Détail
         ], [
             'name.required' => 'Le champ raison de d\'absence est obligatoire',
@@ -47,5 +45,22 @@ class AbsenceController extends Controller
 
         $absences = Absence::all();
         return view('admin.absences.list', compact('absences'));
+    }
+
+    public function delete_absences($id){
+        $absence = Absence::find($id);
+        $absence->delete();
+        return redirect()->route('admin.absences.list');
+    }
+    public function edit_absences($id){
+        $absence = Absence::find($id);
+        return view('admin.absences.update', compact('absence'));
+    }
+    public function update_absences(Request $request, $id){
+        $absence = Absence::find($id);
+        $absence->name = $request->name;
+        $absence->detail = $request->detail;
+        $absence->save();
+        return redirect()->route('admin.absences.list');
     }
 }

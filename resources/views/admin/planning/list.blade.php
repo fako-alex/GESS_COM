@@ -104,18 +104,11 @@
                             <thead>
                                 <tr>
                                     <th>N°</th>
-                                    <th>Nom du service</th>
-                                    <th>Personnel concerné</th>
-                                    <th>Type de planification</th>
-                                    <th>Date de début</th>
-                                    <th>Date de fin</th>
-                                    <th>Heure de début</th>
-                                    <th>Heure de fin</th>
-                                    <th>Adresse de l'évènement</th>
-                                    <th>Statut de l'événement</th>
-                                    <th>Créer par</th>
-                                    <th>Date de creation</th>
-                                    <th>Description du planning</th>
+                                    <th>Abrégé</th>
+                                    <th>Nom</th>
+                                    <th>Code</th>
+                                    <th>Durée théorique</th>
+                                    <th>Type</th>
                                     <th class="!text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -123,38 +116,15 @@
                                 @forelse($plannings as $planning)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $planning->service ? $planning->service->name : 'Non défini' }}</td>
-                                        <td>{{ $planning->user ? $planning->user->name . ' ' . $planning->user->first_name : 'Non défini' }}
+                                        <td>{{ $planning->service ? $planning->service->name : '' }}</td>
+                                        <td>{{ $planning->name_model_planning ? $planning->name_model_planning : '' }}
                                         </td>
-                                        <td>{{ $planning->planning_type ? $planning->planning_type : '' }}</td>
-                                        <td>{{ $planning->start_date ? $planning->start_date : '' }}</td>
                                         <td>{{ $planning->end_date ? $planning->end_date : '' }}</td>
-                                        <td>{{ $planning->start_time ? $planning->start_time : '' }}</td>
-                                        <td>{{ $planning->end_time ? $planning->end_time : '' }}</td>
-                                        <td>{{ $planning->event_location ? $planning->event_location : '' }}</td>
-                                        <td>
-                                            @if ($planning->status === 'confirme')
-                                                <span
-                                                    class="px-3 py-1 rounded-full badge bg-success/20 text-success hover:top-0">Confirmé</span>
-                                            @elseif($planning->status === 'en_attente')
-                                                <span
-                                                    class="px-3 py-1 rounded-full badge bg-warning/20 text-warning hover:top-0">En
-                                                    cours</span>
-                                            @elseif ($planning->status === 'annule')
-                                                <span
-                                                    class="px-3 py-1 rounded-full badge bg-danger/20 text-danger hover:top-0">Annuler</span>
-                                            @else
-                                                <span class="text-gray-500">Non défini</span>
-                                            @endif
+                                        <td>{{ $planning->duree_calculer_model_planning ? $planning->duree_calculer_model_planning : '' }}
                                         </td>
-                                        <td>
-                                            {{ $planning->addedByplanning
-                                                ? $planning->addedByplanning->name . ' ' . $planning->addedByplanning->first_name
-                                                : 'Non défini' }}
-                                        </td>
-                                        <td>{{ $planning->created_at ? \Carbon\Carbon::parse($planning->created_at)->format('d/m/Y') : ' ' }}
-                                        </td>
-                                        <td>{{ $planning->detail_planning ?? 'Non défini' }}</td>
+                                        <td>{{ $planning->type_model_planning ? $planning->type_model_planning : '' }}</td>
+
+                                        {{-- bouton action --}}
                                         <td class="text-center">
                                             <ul class="flex items-center justify-center gap-2">
                                                 <div x-data="{ open: false, selectedType: '' }">

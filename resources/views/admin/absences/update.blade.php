@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <form method="post" action="{{ route('admin.departures.update.submit', $departures->id) }}" enctype="multipart/form-data"
+    <form method="post" action="{{ route('admin.absences.update.submit', $absence->id) }}" enctype="multipart/form-data"
         class="mb-5 rounded-md border border-[#ebedf2] bg-white p-4 dark:border-[#191e3a] dark:bg-[#0e1726]">
         @csrf
         @method('PUT')
@@ -26,7 +26,7 @@
                 </ol>
             </div>
             <div class="flex justify-end"> <!-- Ajout de mb-4 pour l'espacement -->
-                <a href="{{ url('departures/list') }}" class="btn btn-primary">
+                <a href="{{ url('absences/list') }}" class="btn btn-primary">
                     <!-- SVG for Add Book Icon -->
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                         class="w-5 h-5 mr-2">
@@ -44,16 +44,6 @@
                     Liste des raisons de départ
                 </a>
             </div>
-
-            {{-- <template x-if="codeArr.includes('code3')">
-            <pre class="code overflow-auto rounded-md !bg-[#191e3a] p-4 text-white">&lt;!-- arrowed --&gt;
-            &lt;ol class="flex font-semibold text-primary dark:text-white-dark"&gt;
-            &lt;li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"&gt;&lt;a href="javascript:;" class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70"&gt;Home&lt;/a&gt;&lt;/li&gt;
-            &lt;li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"&gt;&lt;a class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]"&gt;Components&lt;/a&gt;&lt;/li&gt;
-            &lt;li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"&gt;&lt;a href="javascript:;" class="p-1.5 px-3 ltr:pl-6 rtl:pr-6 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70"&gt;UI Kit&lt;/a&gt;&lt;/li&gt;
-            &lt;/ol&gt;
-            </pre>
-        </template> --}}
         </div>
 
         <div class="flex items-center px-6 py-4">
@@ -72,7 +62,7 @@
             <div class="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-3">
                 <div>
                     <label for="name">Titre de la raison de départ</label>
-                    <input id="name" name="name" value="{{ old('name', $departures->name) }}" type="text"
+                    <input id="name" name="name" value="{{ old('name', $absence->name) }}" type="text"
                         placeholder="Exp : Licenciement" class="form-input">
                     @if ($errors->has('name'))
                         <span class="text-red-500 badge-outline-danger">{{ $errors->first('name') }}</span>
@@ -80,7 +70,7 @@
                 </div>
                 <div class="col-span-2">
                     <label for="detail">Description de la raison de départ<span class="text-danger"></span></label>
-                    <textarea id="detail" name="detail" class="w-full form-textarea" placeholder="Exp : departure SOFT">{{ old('detail', $departures->detail) }}</textarea>
+                    <textarea id="detail" name="detail" class="w-full form-textarea" placeholder="Exp : departure SOFT">{{ old('detail', $absence->detail) }}</textarea>
                     @if ($errors->has('detail'))
                         <span class="text-danger badge-outline-danger">{{ $errors->first('detail') }}</span>
                     @endif

@@ -13,17 +13,36 @@ class Planning extends Model
     protected $table = 'plannings';
 
     protected $fillable = [
-        'service_id',
-        'user_id',
-        'planning_type',
-        'start_date',
-        'start_time',
-        'end_date',
-        'end_time',
-        'event_location',
+
+        'name_model_planning',
+        'type_model_planning',
+        'duree_calculer_model_planning',
         'status',
-        'detail_planning',
+        'heure_arriver_un_model_planning',
+        'heure_depart_un_model_planning',
+        'av_dep_un',
+        'ap_dep_un',
+        'debut_ap_un',
+        'fin_ap_un',
+        'heure_arriver_deux_model_planning',
+        'heure_depart_deux_model_planning',
+        'av_dep_deux',
+        'ap_dep_deux',
+        'debut_ap_deux',
+        'fin_ap_deux',
         'created_by',
+    ];
+
+    protected $casts = [
+        'duree_calculer_model_planning' => 'string',
+        'heure_arriver_un_model_planning' => 'string',
+        'heure_depart_un_model_planning' => 'string',
+        'debut_ap_un' => 'string',
+        'fin_ap_un' => 'string',
+        'heure_arriver_deux_model_planning' => 'string',
+        'heure_depart_deux_model_planning' => 'string',
+        'debut_ap_deux' => 'string',
+        'fin_ap_deux' => 'string',
     ];
 
     // Relation avec l'utilisateur qui a créé le planning
@@ -32,15 +51,4 @@ class Planning extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    // Relation avec le service
-    public function service(): BelongsTo
-    {
-        return $this->belongsTo(Service::class, 'service_id');
-    }
-
-    // Relation avec l'utilisateur concerné
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 }

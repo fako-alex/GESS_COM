@@ -44,16 +44,6 @@
                     Liste du personnel
                 </a>
             </div>
-
-            <template x-if="codeArr.includes('code3')">
-                <pre class="code overflow-auto rounded-md !bg-[#191e3a] p-4 text-white">&lt;!-- arrowed --&gt;
-            &lt;ol class="flex font-semibold text-primary dark:text-white-dark"&gt;
-            &lt;li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"&gt;&lt;a href="javascript:;" class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70"&gt;Home&lt;/a&gt;&lt;/li&gt;
-            &lt;li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"&gt;&lt;a class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]"&gt;Components&lt;/a&gt;&lt;/li&gt;
-            &lt;li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"&gt;&lt;a href="javascript:;" class="p-1.5 px-3 ltr:pl-6 rtl:pr-6 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70"&gt;UI Kit&lt;/a&gt;&lt;/li&gt;
-            &lt;/ol&gt;
-            </pre>
-            </template>
         </div>
 
         <div class="flex items-center px-6 py-4">

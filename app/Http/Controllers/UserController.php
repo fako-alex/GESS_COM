@@ -328,23 +328,19 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    // public function getUsersByService($serviceId)
-    // {
-    //     $users = \App\Models\User::where('service_id', $serviceId)->get();
-    //     return response()->json($users);
-    // }
     public function getUsersByService($serviceId)
-    {
-        $users = User::where('service_id', $serviceId)
-            ->where('status', 'Actif')
-            ->whereNull('departure_date')
-            ->whereNull('departure_id')
-            ->whereNull('absence_id')
-            ->get();
+{
+    // Récupérer les utilisateurs en fonction des conditions spécifiées
+    $users = User::where('service_id', $serviceId)
+        ->where('status', 'Actif')
+        ->whereNull('departure_date')
+        ->whereNull('departure_id')
+        ->whereNull('absence_id')
+        ->get();
 
-        return response()->json($users);
-    }
-
+    // Retourner les utilisateurs en réponse JSON
+    return response()->json($users);
+}
 
 
 }
